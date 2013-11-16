@@ -26,6 +26,7 @@
   ],
   "main": "./lib",
   "dependencies": {
+    "debug": "0.7.x"
   },
   "devDependencies": {
     "mocha": "1.x.x",
