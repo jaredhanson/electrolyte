@@ -1,5 +1,5 @@
 SOURCES ?= lib/*.js
-TESTS ?= test/*.test.js
+TESTS ?= test/*.test.js test/**/*.test.js
 
 test: test-mocha
 test-cov: test-istanbul-mocha
