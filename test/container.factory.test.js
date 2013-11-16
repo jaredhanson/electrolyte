@@ -9,24 +9,23 @@ function Counter(i) {
   this.count = i;
 }
 
-function DoubleCounter(i, single) {
+function DoubleCounter(i, s) {
   this.count = i;
-  this.single = single;
+  this.single = s;
 }
 
-function TripleCounter(i, duble, single) {
+function TripleCounter(i, d, s) {
   this.count = i;
-  this.double = duble;
-  this.single = single;
+  this.double = d;
+  this.single = s;
 }
 
 
 describe('Container#factory', function() {
   
-  describe('creating an object', function() {
+  describe('creating an object with no dependencies', function() {
     var container = new Container();
-    var si = 0
-      , di = 0;
+    var si = 0;
 
     container.factory('counter', function() {
       return new Counter(++si);
@@ -39,17 +38,18 @@ describe('Container#factory', function() {
       expect(obj).to.be.an.instanceOf(Counter);
     });
     
-    it('should create object with dependencies injected', function() {
+    it('should create object with normal properties', function() {
       expect(obj.count).to.equal(1);
     });
     
     it('should create unique instances', function() {
       var obj2 = container.create('counter');
       expect(obj).to.not.be.equal(obj2);
+      expect(obj2.count).to.equal(2);
     });
   });
   
-  describe('creating an object with one dependency', function() {
+  describe('creating an object with one dependency at one level', function() {
     var container = new Container();
     var si = 0
       , di = 0;
@@ -57,8 +57,8 @@ describe('Container#factory', function() {
     container.factory('counter', function() {
       return new Counter(++si);
     });
-    container.factory('doubleCounter', [ 'counter' ], function(single) {
-      return new DoubleCounter(++di, single);
+    container.factory('doubleCounter', [ 'counter' ], function(s) {
+      return new DoubleCounter(++di, s);
     });
     
     var s1 = container.create('counter');
@@ -78,10 +78,12 @@ describe('Container#factory', function() {
     it('should create unique instances', function() {
       var obj2 = container.create('doubleCounter');
       expect(obj).to.not.be.equal(obj2);
+      expect(obj2.count).to.equal(2);
+      expect(obj2.single.count).to.equal(3);
     });
   });
   
-  describe('creating an object with two dependencies', function() {
+  describe('creating an object with two dependencies, one of which is at two levels', function() {
     var container = new Container();
     var si = 0
       , di = 0
@@ -90,11 +92,11 @@ describe('Container#factory', function() {
     container.factory('counter', function() {
       return new Counter(++si);
     });
-    container.factory('doubleCounter', [ 'counter' ], function(single) {
-      return new DoubleCounter(++di, single);
+    container.factory('doubleCounter', [ 'counter' ], function(s) {
+      return new DoubleCounter(++di, s);
     });
-    container.factory('tripleCounter', [ 'doubleCounter', 'counter' ], function(duble, single) {
-      return new TripleCounter(++ti, duble, single);
+    container.factory('tripleCounter', [ 'doubleCounter', 'counter' ], function(d, s) {
+      return new TripleCounter(++ti, d, s);
     });
     
     var s1 = container.create('counter');
@@ -117,6 +119,9 @@ describe('Container#factory', function() {
     it('should create unique instances', function() {
       var obj2 = container.create('tripleCounter');
       expect(obj).to.not.be.equal(obj2);
+      expect(obj2.count).to.equal(2);
+      expect(obj2.double.count).to.equal(3);
+      expect(obj2.single.count).to.equal(6);
     });
   });
 });

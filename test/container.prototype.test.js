@@ -28,7 +28,7 @@ describe('Container#prototype', function() {
       expect(obj.__proto__).to.equal(proto);
     });
     
-    it('should create object with properties of prototype', function() {
+    it('should create object with prototype properties', function() {
       expect(obj.eat()).to.equal('starch');
     });
     
