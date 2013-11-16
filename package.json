@@ -3,8 +3,12 @@
   "version": "0.0.1",
   "description": "Elegant dependency injection for Node.js.",
   "keywords": [
-    "ioc",
-    "di"
+    "require",
+    "dependency",
+    "dependencies",
+    "injection",
+    "di",
+    "ioc"
   ],
   "author": {
     "name": "Jared Hanson",
