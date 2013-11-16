@@ -30,6 +30,7 @@
   ],
   "main": "./lib",
   "dependencies": {
+    "scripts": "0.1.x",
     "debug": "0.7.x"
   },
   "devDependencies": {
