@@ -1,17 +1,17 @@
 /* global describe, it, expect */
 
-var Container = require('../lib/container')
-  , node = require('..').loaders.node;
+var Container = require('../../../lib/container')
+  , node = require('../../../lib/loaders/node');
 
 
 describe('integration of Node loader', function() {
   
   describe('node', function() {
     var container = new Container();
-    container.loader(node(__dirname + '/objects/node'));
+    container.loader(node(__dirname + '/objects'));
     
     describe('creating laptop', function() {
-      var obj = container.create('device/laptop');
+      var obj = container.create('devices/laptop');
       
       it('should create an object', function() {
         expect(obj).to.be.an('object');
@@ -24,19 +24,19 @@ describe('integration of Node loader', function() {
       });
       
       it('should create unique instances', function() {
-        var obj2 = container.create('device/laptop');
+        var obj2 = container.create('devices/laptop');
         expect(obj).to.not.be.equal(obj2);
       });
       
       it('should cache components', function() {
-        expect(container._o['device/laptop']).to.be.an('object');
-        expect(container._o['device/cpu/x86']).to.be.an('object');
-        expect(container._o['device/storage/floppy']).to.be.undefined;
+        expect(container._o['devices/laptop']).to.be.an('object');
+        expect(container._o['devices/cpu/x86']).to.be.an('object');
+        expect(container._o['devices/storage/floppy']).to.be.undefined;
       });
     });
     
     describe('creating phone', function() {
-      var obj = container.create('device/phone');
+      var obj = container.create('devices/phone');
       
       it('should create an object', function() {
         expect(obj).to.be.an('object');
@@ -50,13 +50,13 @@ describe('integration of Node loader', function() {
       });
       
       it('should create unique instances', function() {
-        var obj2 = container.create('device/phone');
+        var obj2 = container.create('devices/phone');
         expect(obj).to.not.be.equal(obj2);
       });
     });
     
     describe('creating PPC CPU', function() {
-      var obj = container.create('device/cpu/ppc');
+      var obj = container.create('devices/cpu/ppc');
       
       it('should create an object', function() {
         expect(obj).to.be.an('object');
@@ -68,7 +68,7 @@ describe('integration of Node loader', function() {
       });
       
       it('should create unique instances', function() {
-        var obj2 = container.create('device/cpu/ppc');
+        var obj2 = container.create('devices/cpu/ppc');
         expect(obj).to.not.be.equal(obj2);
       });
     });

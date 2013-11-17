@@ -1,5 +1,5 @@
 function Keypad() {
-  this.layout = 'calculator';
+  this.layout = 'Calculator';
 }
 
 module.exports = Keypad;
