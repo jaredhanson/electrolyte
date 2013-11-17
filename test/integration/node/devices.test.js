@@ -10,6 +10,25 @@ describe('integration of Node loader', function() {
     var container = new Container();
     container.loader(node(__dirname + '/objects'));
     
+    describe('creating server', function() {
+      var obj = container.create('devices/server');
+      
+      it('should create an object', function() {
+        expect(obj).to.be.an('object');
+        expect(obj.constructor.name).to.equal('Server');
+      });
+      
+      it('should conform to interface', function() {
+        expect(obj.cpu.type).to.equal('x86');
+        expect(obj.chassis).to.equal('2U');
+      });
+      
+      it('should create unique instances', function() {
+        var obj2 = container.create('devices/server');
+        expect(obj).to.not.be.equal(obj2);
+      });
+    });
+    
     describe('creating desktop', function() {
       var obj = container.create('devices/desktop');
       
