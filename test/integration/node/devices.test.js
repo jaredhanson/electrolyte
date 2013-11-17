@@ -6,9 +6,28 @@ var Container = require('../../../lib/container')
 
 describe('integration of Node loader', function() {
   
-  describe('node', function() {
+  describe('loading objects to create devices', function() {
     var container = new Container();
     container.loader(node(__dirname + '/objects'));
+    
+    describe('creating desktop', function() {
+      var obj = container.create('devices/desktop');
+      
+      it('should create an object', function() {
+        expect(obj).to.be.an('object');
+        expect(obj.constructor.name).to.equal('Desktop');
+      });
+      
+      it('should conform to interface', function() {
+        expect(obj.keyboard.desc()).to.equal('EN+Calculator');
+        expect(obj.cpu.type).to.equal('x86');
+      });
+      
+      it('should create unique instances', function() {
+        var obj2 = container.create('devices/desktop');
+        expect(obj).to.not.be.equal(obj2);
+      });
+    });
     
     describe('creating laptop', function() {
       var obj = container.create('devices/laptop');
@@ -26,12 +45,6 @@ describe('integration of Node loader', function() {
       it('should create unique instances', function() {
         var obj2 = container.create('devices/laptop');
         expect(obj).to.not.be.equal(obj2);
-      });
-      
-      it('should cache components', function() {
-        expect(container._o['devices/laptop']).to.be.an('object');
-        expect(container._o['devices/cpu/x86']).to.be.an('object');
-        expect(container._o['devices/storage/floppy']).to.be.undefined;
       });
     });
     
@@ -73,25 +86,14 @@ describe('integration of Node loader', function() {
       });
     });
     
-    /*
-    describe.only('creating car using constructor pattern', function() {
-      var obj = container.create('car');
-      
-      it('should create an object', function() {
-        expect(obj).to.be.an('object');
-        expect(obj.constructor.name).to.equal('Car');
-      });
-      
-      it('should create object with normal properties', function() {
-        expect(obj.start()).to.equal('using 240 volts');
-      });
-      
-      it('should create unique instances', function() {
-        var obj2 = container.create('gasolineengine');
-        expect(obj).to.not.be.equal(obj2);
-      });
+    it('should cache loaded components', function() {
+      expect(container._o['devices/laptop']).to.be.an('object');
+      expect(container._o['devices/cpu/x86']).to.be.an('object');
     });
-    */
+    
+    it('should not cache unloaded components', function() {
+      expect(container._o['devices/storage/floppy']).to.be.undefined;
+    });
   });
   
 });

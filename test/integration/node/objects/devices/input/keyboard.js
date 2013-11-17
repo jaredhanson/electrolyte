@@ -4,6 +4,6 @@ function Keyboard() {
 
 Keyboard.prototype.desc = function() {
   return this.language;
-}
+};
 
 module.exports = Keyboard;
