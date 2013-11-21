@@ -1,6 +1,6 @@
 {
-  "name": "ionic",
-  "version": "0.0.1",
+  "name": "electrolyte",
+  "version": "0.0.2",
   "description": "Elegant dependency injection for Node.js.",
   "keywords": [
     "require",
@@ -17,10 +17,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/ionic.git"
+    "url": "git://github.com/jaredhanson/electrolyte.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/ionic/issues"
+    "url": "http://github.com/jaredhanson/electrolyte/issues"
   },
   "licenses": [
     {

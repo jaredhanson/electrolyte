@@ -1,11 +1,11 @@
 /* global describe, it, expect */
 
-var ionic = require('..');
+var electrolyte = require('..');
 
-describe('ionic', function() {
+describe('electrolyte', function() {
   
   it('should export constructors', function() {
-    expect(ionic.Container).to.be.a('function');
+    expect(electrolyte.Container).to.be.a('function');
   });
   
 });
