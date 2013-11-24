@@ -1,4 +1,4 @@
-exports = module.exports = function(db) {
+exports = module.exports = function(db, logger) {
   
   function validateItem(req, res, next) {
     if (!req.body.description) {
@@ -13,7 +13,10 @@ exports = module.exports = function(db) {
     }
     
     db.add(todo, function(err) {
-      if (err) { return next(err); }
+      if (err) {
+        logger.error(err.message);
+        return next(err);
+      }
       next();
     });
   }
@@ -30,4 +33,4 @@ exports = module.exports = function(db) {
            redirectToList ];
 }
 
-exports['@require'] = [ 'db/todos' ];
+exports['@require'] = [ 'db/todos', 'logger' ];

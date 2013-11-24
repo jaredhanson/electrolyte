@@ -1,4 +1,9 @@
-exports = module.exports = function(db) {
+exports = module.exports = function(db, logger) {
+  
+  function logRequest(req, res, next) {
+    logger.info(req.ip + ' ' + req.headers['user-agent']);
+    next();
+  }
   
   function loadFromDb(req, res, next) {
     db.findAll(function(err, todos) {
@@ -15,8 +20,9 @@ exports = module.exports = function(db) {
   /**
    * GET /
    */
-  return [ loadFromDb,
+  return [ logRequest,
+           loadFromDb,
            render ];
 }
 
-exports['@require'] = [ 'db/todos' ];
+exports['@require'] = [ 'db/todos', 'logger' ];
