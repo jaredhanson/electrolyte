@@ -13,7 +13,7 @@ var app = bootable(express());
 
 // load environment-specific settings, if any
 app.phase(require('bootable-environment')());
-// run initializers, if any
+// run initializers
 app.phase(bootable.initializers('etc/init', app));
 // draw routes
 app.phase(bootable.routes(__dirname + '/routes.js', app));

@@ -1,10 +1,12 @@
-exports = module.exports = function(logger) {
+exports = module.exports = function(settings, logger) {
   var db = new Database(logger);
+  db.connect(settings.get('db host'));
+  
   return db;
 }
 
 exports['@singleton'] = true;
-exports['@require'] = [ 'logger' ];
+exports['@require'] = [ 'settings', 'logger' ];
 
 
 
@@ -16,6 +18,10 @@ var records = [
 
 function Database(logger) {
   this.logger = logger;
+}
+
+Database.prototype.connect = function(host) {
+  console.log('connecting to db server at ' + host);
 }
 
 Database.prototype.findAll = function(cb) {
