@@ -1,4 +1,4 @@
-exports = module.exports = function(db, logger) {
+exports = module.exports = function(settings, db, logger) {
   
   function logRequest(req, res, next) {
     logger.info(req.ip + ' ' + req.headers['user-agent']);
@@ -14,6 +14,7 @@ exports = module.exports = function(db, logger) {
   }
   
   function render(req, res, next) {
+    res.locals.title = settings.get('title');
     res.render('list');
   }
 
@@ -25,4 +26,4 @@ exports = module.exports = function(db, logger) {
            render ];
 }
 
-exports['@require'] = [ 'db/todos', 'logger' ];
+exports['@require'] = [ 'settings', 'db/todos', 'logger' ];
