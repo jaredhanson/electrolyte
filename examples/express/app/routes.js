@@ -1,7 +1,8 @@
+var IoC = require('electrolyte');
+
+
 module.exports = function routes() {
 
-  this.get('/hello', function(req, res) {
-    res.send('Hello!')
-  });
+  this.get('/', IoC.create('handlers/list'));
 
 }

@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "dependencies": {
     "express": "3.x.x",
+    "ejs-locals": "1.x.x",
     "bootable": "0.1.x",
-    "bootable-environment": "0.1.x"
+    "bootable-environment": "0.1.x",
+    "electrolyte": "*"
   },
   "scripts": {
     "start": "node bin/server.js"
