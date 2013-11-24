@@ -21,3 +21,12 @@ Database.prototype.findAll = function(cb) {
     return cb(null, records);
   });
 }
+
+Database.prototype.add = function(item, cb) {
+  process.nextTick(function() {
+    var id = records.length + 1;
+    item.id = id;
+    records.push(item);
+    return cb(null);
+  });
+}

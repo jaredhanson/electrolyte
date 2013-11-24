@@ -2,3 +2,9 @@
 
 <h2>To Do List</h2>
 <%- partial('item', todos) %>
+
+<br><br>
+<form action="/todo" method="post">
+Add Task: <input type="text" name="description" class="span3">
+<button class="Button" type="submit">Add</button>
+</form>
