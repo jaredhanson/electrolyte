@@ -99,6 +99,35 @@ Electrolyte uses to automatically wire together an application.
 - `@singleton`  Indicates that the component returns a singleton object, which
   should be shared by all components in the application.
 
+#### Creating Components
+
+Components are created by asking the IoC container to create them:
+
+```javascript
+var IoC = require('electrolyte');
+
+var db = IoC.create('database');
+```
+
+Electrolyte is smart enough to automatically traverse a component's dependencies
+(and dependencies of dependencies, and so on), correctly wiring together the
+complete object structure.
+
+#### Loading Components
+
+When a component is `@require`'d by another component, Electrolyte will
+automatically load and instantiate it.  The loader needs to be configured with
+location where an application's components are found:
+
+```javascript
+IoC.loader(IoC.node('app/components'));
+```
+
+## Examples
+
+- __[Express](https://github.com/jaredhanson/electrolyte/tree/master/examples/express)__
+  An example Express app using IoC to create routes, with necessary components.
+
 ## Tests
 
     $ npm install
