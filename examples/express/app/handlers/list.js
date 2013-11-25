@@ -1,3 +1,16 @@
+/**
+ * Render to-do list.
+ *
+ * This route handler is used to display the list of to-do items.
+ *
+ * Parameters:
+ *
+ *   - `settings`  Settings configured for the application.
+ *
+ *   - `db`  Connection to the database where todo records are stored.
+ *
+ *   - `logger`  Logger for logging warnings, errors, etc.
+ */
 exports = module.exports = function(settings, db, logger) {
   
   function logRequest(req, res, next) {
@@ -26,4 +39,7 @@ exports = module.exports = function(settings, db, logger) {
            render ];
 }
 
+/**
+ * Component annotations.
+ */
 exports['@require'] = [ 'settings', 'db/todos', 'logger' ];

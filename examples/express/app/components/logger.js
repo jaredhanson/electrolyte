@@ -1,8 +1,16 @@
+/**
+ * Initialize logger.
+ *
+ * This component initializes the application's logger.
+ */
 exports = module.exports = function() {
   var logger = new Logger();
   return logger;
 }
 
+/**
+ * Component annotations.
+ */
 exports['@singleton'] = true;
 
 

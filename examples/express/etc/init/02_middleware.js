@@ -3,6 +3,9 @@
  */
 var express = require('express');
 
+/**
+ * Initialize middleware.
+ */
 module.exports = function() {
   
   this.use(express.urlencoded());

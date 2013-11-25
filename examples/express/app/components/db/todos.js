@@ -1,3 +1,14 @@
+/**
+ * Initialize database.
+ *
+ * This component connects to the database used to store to-do records.
+ *
+ * Parameters:
+ *
+ *   - `settings`  Settings configured for the application.
+ *
+ *   - `logger`  Logger for logging warnings, errors, etc.
+ */
 exports = module.exports = function(settings, logger) {
   var db = new Database(logger);
   db.connect(settings.get('db host'));
@@ -5,6 +16,9 @@ exports = module.exports = function(settings, logger) {
   return db;
 }
 
+/**
+ * Component annotations.
+ */
 exports['@singleton'] = true;
 exports['@require'] = [ 'settings', 'logger' ];
 
