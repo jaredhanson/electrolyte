@@ -12,6 +12,11 @@ When writing unit tests, any component required by a route handler can easily be
 mocked, allowing for maximum code coverage, including easy simulation of errors
 and error handling.
 
+#### Install & Run
+
+    $ npm install
+    $ npm start
+
 #### Directory Structure
 
 - [app/index.js](app/index.js)  creates an Express application
