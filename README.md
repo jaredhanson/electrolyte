@@ -19,6 +19,86 @@ by [Martin Fowler](http://martinfowler.com/).
 
     $ npm install electrolyte
 
+## Usage
+
+There are two important terms to understand when using Electrolyte:
+components and annotations.
+
+#### Components
+
+Components are simply modules which return objects used within an application.
+For instance, a typical web application might need a place to store settings, a
+database connection, and a logging facility.
+
+Here's a component that initializes settings:
+
+```javascript
+exports = module.exports = function() {
+  var settings = {}
+    , env = process.env.NODE_ENV || 'development';
+  
+  switch (env) {
+    case 'production':
+      settings.dbHost = 'sql.example.com';
+      settings.dbPort = 3306;
+      break;
+    default:
+      settings.dbHost = '127.0.0.1';
+      settings.dbPort = 3306;
+      break;
+  }
+  
+  return settings;
+}
+
+exports['@singleton'] = true;
+```
+
+Pretty simple.  A component exports a "factory" function, which is used to
+create and initialize an object.  In this case, it just sets a couple options
+depending on the environment.
+
+What about `exports['@singleton']`?  That's an annotation, and we'll return to
+that in a moment.
+
+
+Here's another component that initializes a database connection:
+
+```javascript
+var mysql = require('mysql');
+
+exports = module.exports = function(settings) {
+  var connection = mysql.createConnection({
+    host: settings.dbHost,
+    port: settings.dbPort
+  });
+
+  connection.connect(function(err) {
+    if (err) { throw err; }
+  });
+
+  return connection;
+}
+
+exports['@singleton'] = true;
+exports['@require'] = [ 'settings' ];
+```
+
+Also very simple.  A function is exported which creates a database connection.
+And those annotations appear again.
+
+#### Annotations
+
+Annotations provide an extra bit of metadata about the component, which
+Electrolyte uses to automatically wire together an application.
+
+- `@require`  Declares an array of dependencies needed by the component.  These
+   dependencies are automatically created and injected as arguments (in the same
+   order as listed in the array) to the exported function.
+
+- `@singleton`  Indicates that the component returns a singleton object, which
+  should be shared by all components in the application.
+
 ## Tests
 
     $ npm install
