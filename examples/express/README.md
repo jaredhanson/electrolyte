@@ -14,5 +14,8 @@ and error handling.
 
 #### Directory Structure
 
-- [app/index.js](app/index.js)  Creates an Express application
-
+- [app/index.js](app/index.js)  creates an Express application
+- [app/routes.js](app/routes.js)  routes drawn by application
+- [app/handers/](app/handlers/)  handlers for HTTP requests
+- [app/components/](app/components/)  components needed by application
+- [etc/init/](etc/init/)   application initializers
