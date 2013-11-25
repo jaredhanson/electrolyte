@@ -120,7 +120,7 @@ component.  The database connection would then be returned from `IoC.create`.
 This automatic instantiation and injection of components eliminates the
 boilerplate plumbing many application need for initialization.
 
-#### Loading Components
+#### Configure the Loader
 
 When a component is `@require`'d by another component, Electrolyte will
 automatically load and instantiate it.  The loader needs to be configured with
