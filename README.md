@@ -113,6 +113,13 @@ Electrolyte is smart enough to automatically traverse a component's dependencies
 (and dependencies of dependencies, and so on), correctly wiring together the
 complete object structure.
 
+In the case of the database above, Electrolyte would first initialize the
+`settings` component, and pass the result as an argument to the `database`
+component.  The database connection would then be returned from `IoC.create`.
+
+This automatic instantiation and injection of components eliminates the
+boilerplate plumbing many application need for initialization.
+
 #### Loading Components
 
 When a component is `@require`'d by another component, Electrolyte will
