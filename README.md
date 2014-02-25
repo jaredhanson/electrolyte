@@ -1,4 +1,4 @@
-![Logo](electrolyte/blob/master/logo.png)
+![Logo](logo.png)
 # Electrolyte
 
 
