@@ -145,6 +145,7 @@ IoC.loader(IoC.node('app/components'));
 
   - [Jared Hanson](http://github.com/jaredhanson)
   - Atomic by Cengiz SARI from The Noun Project
+  - [Colour palette](http://www.colourlovers.com/palette/912371/Electrolytes)
 
 ## License
 
