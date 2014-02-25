@@ -1,3 +1,4 @@
+![Logo](logo.png)
 # Electrolyte
 
 
@@ -13,7 +14,7 @@ increased test coverage.
 
 For further details about the software architecture used for IoC and dependency
 injection, refer to [Inversion of Control Containers and the Dependency Injection pattern](http://martinfowler.com/articles/injection.html)
-by [Martin Fowler](http://martinfowler.com/). 
+by [Martin Fowler](http://martinfowler.com/).
 
 ## Install
 
@@ -36,7 +37,7 @@ Here's a component that initializes settings:
 exports = module.exports = function() {
   var settings = {}
     , env = process.env.NODE_ENV || 'development';
-  
+
   switch (env) {
     case 'production':
       settings.dbHost = 'sql.example.com';
@@ -47,7 +48,7 @@ exports = module.exports = function() {
       settings.dbPort = 3306;
       break;
   }
-  
+
   return settings;
 }
 
@@ -143,6 +144,8 @@ IoC.loader(IoC.node('app/components'));
 ## Credits
 
   - [Jared Hanson](http://github.com/jaredhanson)
+  - Atomic by Cengiz SARI from The Noun Project
+  - [Colour palette](http://www.colourlovers.com/palette/912371/Electrolytes)
 
 ## License
 
