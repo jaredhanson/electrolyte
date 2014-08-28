@@ -88,6 +88,26 @@ exports['@require'] = [ 'settings' ];
 Also very simple.  A function is exported which creates a database connection.
 And those annotations appear again.
 
+It will also handle requiring traditional modules for you, so you can use the same initialization patterns and wrap any modules with a component easily in the future, the same example as above could become just:
+
+```javascript
+exports = module.exports = function(mysql, settings) {
+  var connection = mysql.createConnection({
+    host: settings.dbHost,
+    port: settings.dbPort
+  });
+
+  connection.connect(function(err) {
+    if (err) { throw err; }
+  });
+
+  return connection;
+}
+
+exports['@singleton'] = true;
+exports['@require'] = [ 'mysql', 'settings' ];
+```
+
 #### Annotations
 
 Annotations provide an extra bit of metadata about the component, which
