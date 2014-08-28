@@ -15,6 +15,13 @@ describe('Container', function() {
         }).to.throw(Error, "Unable to create component 'unknown'");
       });
     });
+
+    describe('traditional module as a component', function() {
+      it('return the same as require', function() {
+        var obj = container.create('dgram');
+        expect(obj).to.be.equal(require('dgram'));
+      });
+    });
     
   });
   
