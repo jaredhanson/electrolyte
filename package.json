@@ -1,6 +1,6 @@
 {
   "name": "electrolyte",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Elegant dependency injection for Node.js.",
   "keywords": [
     "require",
@@ -37,6 +37,13 @@
     "mocha": "1.x.x",
     "chai": "1.x.x"
   },
+  "contributors": [
+    {
+      "name": "Jeremie Miller",
+      "email": "jeremie.miller@gmail.com",
+      "url": "http://jeremie.com"
+    }
+  ],
   "engines": {
     "node": "*"
   },
