@@ -17,6 +17,9 @@ describe('Container', function() {
     });
 
     describe('traditional module as a component', function() {
+      var container = new Container();
+      container.loader(require('../lib/loaders/node_modules')());
+      
       it('return the same as require', function() {
         var obj = container.create('dgram');
         expect(obj).to.be.equal(require('dgram'));
