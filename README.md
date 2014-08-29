@@ -154,7 +154,7 @@ inject modules themselves.  This is typical with modules that provide
 network-related functionality that needs to be mocked out in test environments.
 
 Electrolyte can be configured to do this automatically, by configuring the loader
-to automaticallhy inject modules:
+to inject modules:
 
 ```javascript
 IoC.loader(IoC.node_modules());
