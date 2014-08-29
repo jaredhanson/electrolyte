@@ -141,10 +141,10 @@ configuration of an application and export common, reusable bundles of
 functionality.
 
 Using the strengths of each approach yields a nicely layered architecture, which
-can be seen in the database component above.  The `[mysql](https://github.com/felixge/node-mysql)`
-module provides reusable functionality for communicating with MySQL databases.
-The database component provides a _configured instance_ created from that
-module.
+can be seen in the database component above.  The `mysql` module provides
+reusable functionality for communicating with MySQL databases.  The database
+component provides a _configured instance_ created from that module that
+connects to a specific database.
 
 This pattern is common: modules are `require()`'d, and object instances created
 from those modules are `@require`'d.
