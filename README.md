@@ -88,26 +88,6 @@ exports['@require'] = [ 'settings' ];
 Also very simple.  A function is exported which creates a database connection.
 And those annotations appear again.
 
-It will also handle requiring traditional modules for you, so you can use the same initialization patterns and wrap any modules with a component easily in the future, the same example as above could become just:
-
-```javascript
-exports = module.exports = function(mysql, settings) {
-  var connection = mysql.createConnection({
-    host: settings.dbHost,
-    port: settings.dbPort
-  });
-
-  connection.connect(function(err) {
-    if (err) { throw err; }
-  });
-
-  return connection;
-}
-
-exports['@singleton'] = true;
-exports['@require'] = [ 'mysql', 'settings' ];
-```
-
 #### Annotations
 
 Annotations provide an extra bit of metadata about the component, which
@@ -150,6 +130,59 @@ location where an application's components are found:
 ```javascript
 IoC.loader(IoC.node('app/components'));
 ```
+
+#### @require vs require()
+
+Loading components is similar in many regards to `require`ing a module, with
+one primary difference: components have the ability to return an object that
+is configured according to application-level or environment-specific settings.
+Traditional modules, in contrast, assume very little about the runtime
+configuration of an application and export common, reusable bundles of
+functionality.
+
+Using the strengths of each approach yields a nicely layered architecture, which
+can be seen in the database component above.  The `[mysql](https://github.com/felixge/node-mysql)`
+module provides reusable functionality for communicating with MySQL databases.
+The database component provides a _configured instance_ created from that
+module.
+
+This pattern is common: modules are `require()`'d, and object instances created
+from those modules are `@require`'d.
+
+There are scenarios in which this line can blur, and it becomes desireable to
+inject modules themselves.  This is typical with modules that provide
+network-related functionality that needs to be mocked out in test environments.
+
+Electrolyte can be configured to do this automatically, by configuring the loader
+to automaticallhy inject modules:
+
+```javascript
+IoC.loader(IoC.node_modules());
+````
+
+With that in place, the database component above can be re-written as follows:
+
+```javascript
+exports = module.exports = function(mysql, settings) {
+  var connection = mysql.createConnection({
+    host: settings.dbHost,
+    port: settings.dbPort
+  });
+
+  connection.connect(function(err) {
+    if (err) { throw err; }
+  });
+
+  return connection;
+}
+
+exports['@singleton'] = true;
+exports['@require'] = [ 'mysql', 'settings' ];
+```
+
+Note that now the `mysql` module is injected by Electrolyte, rather than
+explicitly `require()`'d.  This makes it easy to write tests for this component
+while mocking out network access entirely.
 
 ## Examples
 
