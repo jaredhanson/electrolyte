@@ -22,6 +22,15 @@ describe('Container', function() {
         expect(obj).to.be.equal(require('dgram'));
       });
     });
+
+    describe('unknown loader', function() {
+      it('should throw an error', function() {
+        expect(function() {
+          container.loader('test',undefined);
+        }).to.throw(Error, "Loader requires a function, was passed a 'undefined'");
+      });
+    });
+  
     
   });
   
