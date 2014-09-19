@@ -31,8 +31,7 @@
   "main": "./lib",
   "dependencies": {
     "scripts": "0.1.x",
-    "debug": "0.7.x",
-    "node-uuid": "~1.4.1"
+    "debug": "0.7.x"
   },
   "devDependencies": {
     "mocha": "1.x.x",
