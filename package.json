@@ -1,6 +1,6 @@
 {
   "name": "electrolyte",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Elegant dependency injection for Node.js.",
   "keywords": [
     "require",
