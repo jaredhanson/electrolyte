@@ -63,7 +63,7 @@ What about `exports['@singleton']`?  That's an annotation, and we'll return to
 that in a moment.
 
 
-Here's another component that initializes a database connection:
+Here's another component that initializes a database connection (saved as 'database.js'):
 
 ```javascript
 var mysql = require('mysql');
