@@ -188,27 +188,27 @@ while mocking out network access entirely.
 
 ```javascript
 IoC.loader(***loader***);
+````
 
 Registers a Component to the IoC Container. ***loader*** is the result, given by on of the following component loaders.
-````
 
 ```javascript
 IoC.node_modules(***moduleName***);
+````
 
 Creates a loader for a previously installed NPM package. Returns the loader, which is a function.
-````
 
 ```javascript
 IoC.node(***searchPath***);
+````
 
 Creates a loader for a any script below the given directory. Let's say you directory is named ***app/***, and it contains subdirectories with a component named ***app/services/hello.js***, you will be able to @require "services/hello" later. Returns the loader, which is a function.
-````
 
 ```javascript
 IoC.value(***componentName***, ***component***);
+````
 
 Creates a loader for a given value/component. Pretty useful when you are generating  objects during runtime (configuration files etc).
-````
 
 
 
