@@ -47,6 +47,18 @@ clobber: clean clobber-node
 doc: doc-jsdoc
 doc-jsdoc:
 	jsdoc $(SOURCES)
+# dox@0.8.0
+doc-dox:
+	cat $(SOURCES) | dox
+# doxx@1.5.0
+doc-doxx:
+	doxx --source lib --target docs
+# dox-docco@0.3.0
+doc-dox-docco:
+	cat $(SOURCES) | dox-docco > out/docco.html
+# dox-foundation@0.5.6
+doc-dox-foundation:
+	dox-foundation --source lib --target docs
 
 view-doc: view-jsdoc
 view-jsdoc:
