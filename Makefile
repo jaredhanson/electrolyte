@@ -44,7 +44,7 @@ clean:
 clobber: clean clobber-node
 
 
-doc: doc-jsdoc
+doc: doc-doxx
 doc-jsdoc:
 	jsdoc $(SOURCES)
 # dox@0.8.0
@@ -60,8 +60,10 @@ doc-dox-docco:
 doc-dox-foundation:
 	dox-foundation --source lib --target docs
 
-view-doc: view-jsdoc
+view-doc: view-doxx
 view-jsdoc:
 	open out/index.html
+view-doxx:
+	open docs/index.html
 
 .PHONY: test test-cov view-cov lint lint-tests submit-cov-to-coveralls ci-travis clean clobber

@@ -1,5 +1,6 @@
 build/
 reports/
+docs/
 
 # Node.js
 node_modules/

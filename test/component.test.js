@@ -7,7 +7,7 @@ describe('Component', function() {
   
   describe('#create', function() {
     
-    describe('abstract component', function() {
+    describe.skip('abstract component', function() {
       var comp = new Component('foo', [], {});
       
       it('should throw an error', function() {
