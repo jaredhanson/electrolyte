@@ -37,4 +37,20 @@ describe('Container', function() {
     
   });
   
+  describe('#loader', function() {
+
+    describe('options', function() {
+      describe('priority', function() {
+        it('should add the source first', function() {
+          var container = new Container();
+          container.loader(function() { return 1; });
+          container.loader(function() { return 2; }, { priority: true });
+
+          var obj = container.create('test');
+          expect(obj).to.equal(2);
+        });
+      });
+    });
+
+  });
 });
