@@ -30,8 +30,8 @@
   ],
   "main": "./lib",
   "dependencies": {
-    "scripts": "0.1.x",
-    "debug": "0.7.x"
+    "debug": "^2.2.0",
+    "scripts": "0.1.x"
   },
   "devDependencies": {
     "mocha": "1.x.x",
