@@ -44,4 +44,12 @@ clean:
 clobber: clean clobber-node
 
 
+doc: doc-jsdoc
+doc-jsdoc:
+	jsdoc $(SOURCES)
+
+view-doc: view-jsdoc
+view-jsdoc:
+	open out/index.html
+
 .PHONY: test test-cov view-cov lint lint-tests submit-cov-to-coveralls ci-travis clean clobber
