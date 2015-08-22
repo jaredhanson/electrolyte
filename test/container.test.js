@@ -30,7 +30,7 @@ describe('Container', function() {
       it('should throw an error', function() {
         expect(function() {
           container.loader('test',undefined);
-        }).to.throw(Error, "Loader requires a function, was passed a 'undefined'");
+        }).to.throw(Error, "Container#use requires a function, was passed a 'undefined'");
       });
     });
   
