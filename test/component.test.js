@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 
-var Component = require('../lib/component');
+var Component = require('../lib/spec');
 
 
 describe('Component', function() {
