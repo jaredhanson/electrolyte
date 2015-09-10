@@ -106,12 +106,12 @@ describe('integration of Node loader', function() {
     });
     
     it('should cache loaded components', function() {
-      expect(container._o['devices/laptop']).to.be.an('object');
-      expect(container._o['devices/cpu/x86']).to.be.an('object');
+      expect(container._spec['devices/laptop']).to.be.an('object');
+      expect(container._spec['devices/cpu/x86']).to.be.an('object');
     });
     
     it('should not cache unloaded components', function() {
-      expect(container._o['devices/storage/floppy']).to.be.undefined;
+      expect(container._spec['devices/storage/floppy']).to.be.undefined;
     });
   });
   
