@@ -37,7 +37,11 @@ describe('resolvers/id', function() {
       expect(resolve('foo/bar')).to.equal('foo/bar');
     });
     
-    it('should not URLish identifiers', function() {
+    it('should not resolve identifiers containing spaces', function() {
+      expect(resolve('foo bar')).to.equal(undefined);
+    });
+    
+    it('should not resolve URLish identifiers', function() {
       expect(resolve('http://schemas.example.test/js/i/foo')).to.equal(undefined);
     });
   })
