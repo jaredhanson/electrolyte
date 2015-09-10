@@ -32,6 +32,7 @@
   "dependencies": {
     "canonical-path": "0.0.2",
     "debug": "^2.2.0",
+    "depd": "^1.0.1",
     "scripts": "0.1.x"
   },
   "devDependencies": {
