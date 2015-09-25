@@ -36,6 +36,10 @@ describe('resolvers/id', function() {
     it('should resolve alphabetical identifiers within namespace', function() {
       expect(resolve('foo/bar')).to.equal('foo/bar');
     });
+
+    it('should resolve alphabetical identifiers within namespace, also backslash', function() {
+      expect(resolve('foo\\bar')).to.equal('foo\\bar');
+    });
     
     it('should not resolve identifiers containing spaces', function() {
       expect(resolve('foo bar')).to.equal(undefined);
