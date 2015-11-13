@@ -18,8 +18,8 @@ describe('Container', function() {
 
     describe('traditional module as a component', function() {
       var container = new Container();
-      container.loader(require('../lib/loaders/node_modules')());
-      
+      container.use(require('../lib/loaders/node_modules')());
+
       it('return the same as require', function() {
         var obj = container.create('dgram');
         expect(obj).to.be.equal(require('dgram'));
@@ -29,7 +29,7 @@ describe('Container', function() {
     describe('unknown loader', function() {
       it('should throw an error', function() {
         expect(function() {
-          container.loader('test',undefined);
+          container.use('test',undefined);
         }).to.throw(Error, "Container#use requires a function, was passed a 'undefined'");
       });
     });

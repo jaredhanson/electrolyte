@@ -8,8 +8,8 @@ describe('integration of Node loader', function() {
   
   describe('loading objects to create devices', function() {
     var container = new Container();
-    container.loader(node(__dirname + '/objects'));
-    
+    container.use(node(__dirname + '/objects'));
+
     describe('creating server', function() {
       var obj = container.create('devices/server');
       
