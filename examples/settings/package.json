@@ -1,0 +1,10 @@
+{
+  "name": "settings-example",
+  "version": "0.0.0",
+  "dependencies": {
+    "electrolyte": "*"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  }
+}
