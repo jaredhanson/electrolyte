@@ -100,6 +100,20 @@ Electrolyte uses to automatically wire together an application.
 - `@singleton`  Indicates that the component returns a singleton object, which
   should be shared by all components in the application.
 
+#### Register Components Manually
+
+```javascript
+var IoC = require('electrolyte');
+
+var fn = function () {
+  return 'db.instance';
+};
+fn['@singleton'] = true;
+IoC.register('database', fn);
+
+var db = IoC.create('database');
+```
+
 #### Creating Components
 
 Components are created by asking the IoC container to create them:
@@ -108,6 +122,14 @@ Components are created by asking the IoC container to create them:
 var IoC = require('electrolyte');
 
 var db = IoC.create('database');
+```
+
+Or you can pass an array to provide dependencies like below.
+```javascript
+var IoC = require('electrolyte');
+var db = IoC.create('database', [
+  IoC.create('settings')
+]);
 ```
 
 Electrolyte is smart enough to automatically traverse a component's dependencies
