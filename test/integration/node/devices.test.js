@@ -8,8 +8,8 @@ describe('integration of Node loader', function() {
   
   describe('loading objects to create devices', function() {
     var container = new Container();
-    container.loader(node(__dirname + '/objects'));
-    
+    container.use(node(__dirname + '/objects'));
+
     describe('creating server', function() {
       var obj = container.create('devices/server');
       
@@ -106,12 +106,12 @@ describe('integration of Node loader', function() {
     });
     
     it('should cache loaded components', function() {
-      expect(container._spec['devices/laptop']).to.be.an('object');
-      expect(container._spec['devices/cpu/x86']).to.be.an('object');
+      expect(container._specs['devices/laptop']).to.be.an('object');
+      expect(container._specs['devices/cpu/x86']).to.be.an('object');
     });
     
     it('should not cache unloaded components', function() {
-      expect(container._spec['devices/storage/floppy']).to.be.undefined;
+      expect(container._specs['devices/storage/floppy']).to.be.undefined;
     });
   });
   

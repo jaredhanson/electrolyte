@@ -15,8 +15,8 @@ var ioc = require('electrolyte');
  * etc.) are located in `app/components`.
  */
 module.exports = function() {
-  
-  ioc.loader('handlers', ioc.node('app/handlers'));
-  ioc.loader(ioc.node('app/components'));
+
+  ioc.use('handlers', ioc.node('app/handlers'));
+  ioc.use(ioc.node('app/components'));
 
 }
