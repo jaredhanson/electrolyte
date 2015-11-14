@@ -128,7 +128,7 @@ automatically load and instantiate it.  The loader needs to be configured with
 location where an application's components are found:
 
 ```javascript
-IoC.loader(IoC.node('app/components'));
+IoC.use(IoC.node('app/components'));
 ```
 
 #### @require vs require()
@@ -157,7 +157,7 @@ Electrolyte can be configured to do this automatically, by configuring the loade
 to inject modules:
 
 ```javascript
-IoC.loader(IoC.node_modules());
+IoC.use(IoC.node_modules());
 ````
 
 With that in place, the database component above can be re-written as follows:
