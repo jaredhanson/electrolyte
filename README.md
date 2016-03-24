@@ -1,5 +1,9 @@
-![Logo](logo.png)
 # Electrolyte
+
+[![Build](https://img.shields.io/travis/jaredhanson/electrolyte.svg)](https://travis-ci.org/jaredhanson/electrolyte)
+[![Coverage](https://img.shields.io/coveralls/jaredhanson/electrolyte.svg)](https://coveralls.io/r/jaredhanson/electrolyte)
+[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/electrolyte.svg?label=quality)](https://codeclimate.com/github/jaredhanson/electrolyte)
+[![Dependencies](https://img.shields.io/david/jaredhanson/electrolyte.svg)](https://david-dm.org/jaredhanson/electrolyte)
 
 
 Electrolyte is a simple, lightweight [inversion of control](http://en.wikipedia.org/wiki/Inversion_of_control)
