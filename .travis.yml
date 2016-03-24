@@ -1,18 +1,21 @@
 language: "node_js"
 node_js:
+  - "5"
+  - "4"
+  - "3" # io.js
+  - "2" # io.js
+  - "1" # io.js
   - "0.12"
-  - "0.11"
-  - "0.10"
-  - "0.8"
-  - "0.6"
-  - "0.4"
-  - "iojs"
+
 
 before_install:
- - "npm install istanbul -g"
- - "npm install coveralls -g"
+  - "npm install istanbul@0.4.x -g"
+  - "npm install coveralls@2.x.x -g"
 
-script: "make ci-travis"
+script:
+  - "make test-cov"
 
 after_success:
-  - "make submit-cov-to-coveralls"
+  - "make report-cov"
+
+sudo: false

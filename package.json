@@ -15,6 +15,13 @@
     "email": "jaredhanson@gmail.com",
     "url": "http://www.jaredhanson.net/"
   },
+  "contributors": [
+    {
+      "name": "Jeremie Miller",
+      "email": "jeremie.miller@gmail.com",
+      "url": "http://jeremie.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/jaredhanson/electrolyte.git"
@@ -22,10 +29,11 @@
   "bugs": {
     "url": "http://github.com/jaredhanson/electrolyte/issues"
   },
+  "license": "MIT",
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
+      "url": "http://opensource.org/licenses/MIT"
     }
   ],
   "main": "./lib",
@@ -36,16 +44,10 @@
     "scripts": "0.1.x"
   },
   "devDependencies": {
-    "mocha": "1.x.x",
-    "chai": "1.x.x"
+    "make-node": "0.3.x",
+    "mocha": "2.x.x",
+    "chai": "3.x.x"
   },
-  "contributors": [
-    {
-      "name": "Jeremie Miller",
-      "email": "jeremie.miller@gmail.com",
-      "url": "http://jeremie.com"
-    }
-  ],
   "engines": {
     "node": "*"
   },
