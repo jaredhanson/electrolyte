@@ -67,6 +67,27 @@ describe('integration of Node loader', function() {
       });
     });
     
+
+    describe('creating tablet (es6 module)', function() {
+      var obj = container.create('devices/tablet');
+
+      it('should create an object', function() {
+        expect(obj).to.be.an('object');
+        expect(obj.constructor.name).to.equal('Tablet');
+      });
+
+      it('should conform to interface', function() {
+        expect(obj.cpu.type).to.equal('ARM');
+        expect(obj.screen.resolution).to.equal('320x480');
+      });
+
+      it('should create unique instances', function() {
+        var obj2 = container.create('devices/tablet');
+        expect(obj).to.not.be.equal(obj2);
+      });
+
+    });
+
     describe('creating phone', function() {
       var obj = container.create('devices/phone');
       
