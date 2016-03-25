@@ -12,7 +12,7 @@ describe('Container', function() {
       it('should throw an error', function() {
         expect(function() {
           var obj = container.create('unknown');
-        }).to.throw(Error, "Unable to create object 'unknown'");
+        }).to.throw(Error, 'Unable to create object "unknown" required by: unknown');
       });
     });
 
