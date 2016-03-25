@@ -135,6 +135,20 @@ location where an application's components are found:
 IoC.use(IoC.node('app/components'));
 ```
 
+#### Injecting a literal component
+
+Manually created components may be directly injected into the container and used as 
+module dependencies.  This is particularly useful in circumstances where a 
+dependency must be created asynchronously.  Manually created components are injected
+using the container's `use()` method and the `literal()` loader:
+
+```javascript
+var myComponent = new MyComponent('a', 'b');
+
+// makes myComponent an injectable dependency with id "myComp"
+IoC.use(IoC.literal('myComp', myComponent));
+```
+
 #### @require vs require()
 
 Loading components is similar in many regards to `require`ing a module, with
