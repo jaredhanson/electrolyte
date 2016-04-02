@@ -28,7 +28,48 @@ describe('Container', function() {
       });
     });
     
-  });
+    describe('patterns', function() {
+      
+      var container = new Container();
+      container.use(require('./fixtures/sources/patterns'));
+      
+      describe('factory', function() {
+        
+        it('should create object', function() {
+          var obj = container.create('factory');
+          expect(obj).to.be.an.instanceof(Object);
+        });
+        
+        it('should create multiple instances of object', function() {
+          var obj1 = container.create('factory');
+          var obj2 = container.create('factory');
+          expect(obj1).to.be.an.instanceof(Object);
+          expect(obj2).to.be.an.instanceof(Object);
+          expect(obj1).to.not.be.equal(obj2);
+        });
+        
+      }); // factory
+      
+      describe('constructor', function() {
+        
+        it('should create object', function() {
+          var obj = container.create('ctor');
+          expect(obj.constructor.name).to.equal('Building')
+        });
+        
+        it('should create multiple instances of object', function() {
+          var obj1 = container.create('ctor');
+          var obj2 = container.create('ctor');
+          expect(obj1.constructor.name).to.equal('Building')
+          expect(obj1.constructor.name).to.equal('Building')
+          expect(obj1).to.not.be.equal(obj2);
+        });
+        
+      }); // constructor
+    
+    }); // patterns
+    
+  }); // #create
   
   describe('#use', function() {
     var container = new Container();
@@ -121,7 +162,6 @@ describe('Container', function() {
       expect(obj).to.be.an.instanceof(redis.RedisCache);
     });
   });
-  
   
   describe('using node_modules loader', function() {
     var container = new Container();
