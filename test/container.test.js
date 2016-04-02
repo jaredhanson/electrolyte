@@ -66,6 +66,60 @@ describe('Container', function() {
         });
         
       }); // constructor
+      
+      describe('literal', function() {
+        
+        describe('object', function() {
+          
+          it('should create object', function() {
+            var obj = container.create('literal/object');
+            expect(obj).to.deep.equal({ greeting: 'Hello', name: 'object' });
+          });
+        
+          it('should not create multiple instances of object', function() {
+            var obj1 = container.create('literal/object');
+            var obj2 = container.create('literal/object');
+            expect(obj1).to.deep.equal({ greeting: 'Hello', name: 'object' });
+            expect(obj2).to.deep.equal({ greeting: 'Hello', name: 'object' });
+            expect(obj1).to.be.equal(obj2);
+          });
+          
+        }); // object
+        
+        describe('string', function() {
+          
+          it('should create object', function() {
+            var obj = container.create('literal/string');
+            expect(obj).to.equal('Hello, string');
+          });
+        
+          it('should not create multiple instances of object', function() {
+            var obj1 = container.create('literal/string');
+            var obj2 = container.create('literal/string');
+            expect(obj1).to.equal('Hello, string');
+            expect(obj2).to.equal('Hello, string');
+            expect(obj1).to.be.equal(obj2);
+          });
+          
+        }); // string
+        
+        describe('function', function() {
+          
+          it('should create object', function() {
+            var obj = container.create('literal/function');
+            expect(obj).to.be.a('function');
+            expect(obj()).to.equal('Hello, function');
+          });
+        
+          it('should not create multiple instances of object', function() {
+            var obj1 = container.create('literal/function');
+            var obj2 = container.create('literal/function');
+            expect(obj1).to.be.equal(obj2);
+          });
+          
+        }); // function
+        
+      }); // literal
     
     }); // patterns
     
