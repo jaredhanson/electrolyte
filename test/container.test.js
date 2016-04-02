@@ -44,6 +44,57 @@ describe('Container', function() {
   });
   
   
+  describe('using common source', function() {
+    var common = require('./fixtures/sources/common');
+    
+    var container = new Container();
+    container.use(common);
+    
+    it('should create logger', function() {
+      var obj = container.create('logger');
+      expect(obj).to.be.an.instanceof(common.Logger);
+    });
+    
+    it('should create singleton instance of logger', function() {
+      var logger1 = container.create('logger');
+      var logger2 = container.create('logger');
+      expect(logger1).to.be.equal(logger2);
+    });
+    
+    it('should throw an error when creating unknown object', function() {
+      expect(function() {
+        container.create('fubar');
+      }).to.throw(Error, 'Unable to create object "fubar" required by: unknown');
+    });
+  });
+  
+  describe('using Memcached cache source', function() {
+    var memcached = require('./fixtures/sources/cache-memcached');
+    
+    var container = new Container();
+    container.use('cache', memcached);
+    
+    it('should create logger', function() {
+      var obj = container.create('cache/cache');
+      expect(obj).to.be.an.instanceof(memcached.MemcachedCache);
+    });
+  });
+  
+  describe('using Redis cache source overridding Memcached cache source', function() {
+    var memcached = require('./fixtures/sources/cache-memcached');
+    var redis = require('./fixtures/sources/cache-redis');
+    
+    var container = new Container();
+    container.use('cache', memcached);
+    container.use('cache', redis);
+    
+    it('should create logger', function() {
+      var obj = container.create('cache/cache');
+      expect(obj).to.be.an.instanceof(redis.RedisCache);
+    });
+  });
+  
+  
   describe('using node_modules loader', function() {
     var container = new Container();
     container.use(require('../lib/loaders/node_modules')());
