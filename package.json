@@ -46,7 +46,8 @@
   "devDependencies": {
     "make-node": "0.3.x",
     "mocha": "2.x.x",
-    "chai": "3.x.x"
+    "chai": "3.x.x",
+    "chai-express-handler": "git://github.com/jaredhanson/chai-express-handler.git"
   },
   "engines": {
     "node": "*"
