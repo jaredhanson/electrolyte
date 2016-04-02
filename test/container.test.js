@@ -48,7 +48,7 @@ describe('Container', function() {
     var container = new Container();
     container.use(require('../lib/loaders/node_modules')());
 
-    it('return the same module as require', function() {
+    it('should return the same module as require', function() {
       var obj = container.create('dgram');
       expect(obj).to.be.equal(require('dgram'));
     });
