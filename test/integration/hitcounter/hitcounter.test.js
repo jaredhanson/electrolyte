@@ -4,13 +4,12 @@ var chai = require('chai');
 var Container = require('../../../lib/container');
 
 
-describe.only('webapp integration test', function() {
+describe('integration/hitcounter', function() {
   
   var container = new Container();
   container.use(require('../../fixtures/sources/common'));
+  container.use('cache', require('../../fixtures/sources/cache-redis'));
   container.use(require('../../../lib/loaders/node')(__dirname));
-  
-  //container.use('cache', require('../../fixtures/sources/cache-redis'));
   
   var response;
   
@@ -29,7 +28,7 @@ describe.only('webapp integration test', function() {
   });
   
   it('should do something', function() {
-    expect(response.data).to.equal('This page has been vistied 1 time!');
+    expect(response.data).to.equal('This page has been visited 42 times!');
   });
   
 });
