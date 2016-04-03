@@ -219,7 +219,7 @@ describe('Container', function() {
   
   describe('using node_modules loader', function() {
     var container = new Container();
-    container.use(require('../lib/loaders/node_modules')());
+    container.use(require('../lib/sources/node_modules')());
 
     it('should return the same module as require', function() {
       var obj = container.create('dgram');
