@@ -53,7 +53,7 @@ describe('Container', function() {
         var spec = specs[0];
         expect(spec.id).to.equal('auth/authenticator');
         expect(spec.singleton).to.equal(true);
-        expect(spec.dependencies).to.deep.equal([]);
+        expect(spec.dependencies).to.deep.equal([ '!container' ]);
         expect(spec.implements).to.deep.equal([ 'http://example.test/ap/Authenticator',
                                                 'http://example.test/ap/Authenticator@0' ]);
       });
@@ -65,7 +65,7 @@ describe('Container', function() {
       });
     }); // using auth source, without plugins
     
-    describe.only('using auth source, with password plugins', function() {
+    describe('using auth source, with password plugins', function() {
       var container = new Container();
       container.use('auth', require('./fixtures/sources/hl-auth'));
       container.use('auth', require('./fixtures/sources/hl-auth-password'));

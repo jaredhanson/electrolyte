@@ -4,7 +4,6 @@ function Authenticator() {
 
 Authenticator.prototype.use = function(scheme) {
   this.schemes.push(scheme);
-  console.log(this.schemes)
 }
 
 
