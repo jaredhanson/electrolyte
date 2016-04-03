@@ -9,7 +9,7 @@ describe('integration/hitcounter-constructor', function() {
   var container = new Container();
   container.use(require('../../fixtures/sources/common'));
   container.use('cache', require('../../fixtures/sources/cache-redis'));
-  container.use(require('../../../lib/loaders/node')(__dirname));
+  container.use(require('../../../lib/sources/node')(__dirname));
   
   var response;
   
