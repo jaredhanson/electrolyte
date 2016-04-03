@@ -1,11 +1,13 @@
 function RedisClient() {
+  this._val = 41;
 }
 
 RedisClient.prototype.get = function(key) {
-  return 41;
+  return this._val;
 }
 
 RedisClient.prototype.set = function(key, val) {
+  this._val = val;
 }
 
 

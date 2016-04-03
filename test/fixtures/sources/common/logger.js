@@ -1,7 +1,9 @@
 function Logger() {
+  this.messages = [];
 }
 
-Logger.prototype.info = function() {
+Logger.prototype.info = function(msg) {
+  this.messages.push(msg);
 }
 
 

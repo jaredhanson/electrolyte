@@ -27,8 +27,19 @@ describe('integration/hitcounter', function() {
       .dispatch();
   });
   
-  it('should do something', function() {
+  it('should respond with hit count', function() {
     expect(response.data).to.equal('This page has been visited 42 times!');
+  });
+  
+  it('should update counter', function() {
+    var counter = container.create('counter');
+    expect(counter.peek()).to.equal(42);
+  });
+  
+  it('should log messages', function() {
+    var logger = container.create('logger');
+    expect(logger.messages[0]).to.equal('GET /');
+    expect(logger.messages[1]).to.equal('Fetching current hit count from cache');
   });
   
 });
