@@ -1,6 +1,6 @@
 exports = module.exports = function memcached(id) {
   var map = {
-    'cache': './memcachedcache'
+    'cache': './cache'
   };
   
   var mid = map[id];
@@ -10,4 +10,4 @@ exports = module.exports = function memcached(id) {
 };
 
 
-exports.MemcachedCache = require('./memcachedcache').MemcachedCache;
+exports.MemcachedCache = require('./cache').MemcachedCache;

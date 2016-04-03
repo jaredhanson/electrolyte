@@ -1,6 +1,6 @@
 exports = module.exports = function redis(id) {
   var map = {
-    'cache': './rediscache',
+    'cache': './cache',
     'client': './client'
   };
   
@@ -11,4 +11,4 @@ exports = module.exports = function redis(id) {
 };
 
 
-exports.RedisCache = require('./rediscache').RedisCache;
+exports.RedisCache = require('./cache').RedisCache;
