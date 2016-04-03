@@ -77,7 +77,48 @@ describe('Container', function() {
         expect(authenticator.schemes[0].scheme).to.equal('basic');
         expect(authenticator.schemes[1].scheme).to.equal('digest');
       });
-    }); // using auth source, without plugins
+    }); // using auth source, with password plugins
+    
+    describe('using auth source, with password and token plugins', function() {
+      var container = new Container();
+      container.use('auth', require('./fixtures/sources/hl-auth'));
+      container.use('auth/plugins', require('./fixtures/sources/hl-auth-password'));
+      container.use('auth/plugins', require('./fixtures/sources/hl-auth-token'));
+    
+      it('should create authenticator', function() {
+        var authenticator = container.create('auth/authenticator');
+        expect(authenticator).to.be.an('object');
+        expect(authenticator.schemes).to.have.length(4);
+        expect(authenticator.schemes[0].scheme).to.equal('basic');
+        expect(authenticator.schemes[1].scheme).to.equal('digest');
+        expect(authenticator.schemes[2].scheme).to.equal('bearer');
+        expect(authenticator.schemes[3].scheme).to.equal('oauth');
+      });
+    }); // using auth source, with password and token plugins
+    
+    describe('using auth source twice, under different namespaces with different plugins', function() {
+      var container = new Container();
+      container.use('auth/password', require('./fixtures/sources/hl-auth'));
+      container.use('auth/password', require('./fixtures/sources/hl-auth-password'));
+      container.use('auth/token', require('./fixtures/sources/hl-auth'));
+      container.use('auth/token', require('./fixtures/sources/hl-auth-token'));
+    
+      it('should create password authenticator', function() {
+        var authenticator = container.create('auth/password/authenticator');
+        expect(authenticator).to.be.an('object');
+        expect(authenticator.schemes).to.have.length(2);
+        expect(authenticator.schemes[0].scheme).to.equal('basic');
+        expect(authenticator.schemes[1].scheme).to.equal('digest');
+      });
+      
+      it('should create token authenticator', function() {
+        var authenticator = container.create('auth/token/authenticator');
+        expect(authenticator).to.be.an('object');
+        expect(authenticator.schemes).to.have.length(2);
+        expect(authenticator.schemes[0].scheme).to.equal('bearer');
+        expect(authenticator.schemes[1].scheme).to.equal('oauth');
+      });
+    }); // using auth source twice, under different namespaces with different plugins
     
   }); // higher-level functionality
   
