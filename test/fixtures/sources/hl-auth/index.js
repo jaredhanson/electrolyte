@@ -10,5 +10,5 @@ exports = module.exports = function auth(id) {
 };
 
 exports.used = function(container) {
-  container.spec('./authenticator');
+  container.add('./authenticator');
 }

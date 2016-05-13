@@ -11,6 +11,6 @@ exports = module.exports = function authPassword(id) {
 };
 
 exports.used = function(container) {
-  container.spec('./basic');
-  container.spec('./digest');
+  container.add('./basic');
+  container.add('./digest');
 }
