@@ -181,15 +181,15 @@ describe('Container', function() {
     });
   });
   
-  describe('using Memcached cache source', function() {
-    var memcached = require('./fixtures/sources/cache-memcached');
+  describe('using Memory cache source', function() {
+    var memory = require('./fixtures/sources/cache-memory');
     
     var container = new Container();
-    container.use('cache', memcached);
+    container.use('cache', memory);
     
-    it('should create Memcached implementation of cache', function() {
+    it('should create Memory implementation of cache', function() {
       var obj = container.create('cache/cache');
-      expect(obj).to.be.an.instanceof(memcached.MemcachedCache);
+      expect(obj).to.be.an.instanceof(memory.MemoryCache);
     });
   });
   
@@ -221,12 +221,12 @@ describe('Container', function() {
     });
   });
   
-  describe('using Redis cache source overridding Memcached cache source', function() {
-    var memcached = require('./fixtures/sources/cache-memcached');
+  describe('using Redis cache source overridding Memory cache source', function() {
+    var memory = require('./fixtures/sources/cache-memory');
     var redis = require('./fixtures/sources/cache-redis');
     
     var container = new Container();
-    container.use('cache', memcached);
+    container.use('cache', memory);
     container.use('cache', redis);
     
     it('should create Redis implementation of cache', function() {
