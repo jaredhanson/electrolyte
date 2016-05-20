@@ -127,7 +127,7 @@ describe('Container', function() {
       it('should throw an error', function() {
         expect(function() {
           container.use('opt', require('./fixtures/sources/out-of-ns'));
-        }).to.throw(Error, '../logger is not within source namespace');
+        }).to.throw(Error, '../logger not found in source');
       });
     }); // using source that attempts to register spec outside of namespace
     
