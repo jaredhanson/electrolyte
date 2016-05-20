@@ -11,6 +11,6 @@ exports = module.exports = function authToken(id) {
 };
 
 exports.used = function(container) {
-  container.add('./bearer');
-  container.add('./oauth');
+  container.add('bearer');
+  container.add('oauth');
 }

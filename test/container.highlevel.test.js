@@ -131,6 +131,18 @@ describe('Container', function() {
       });
     }); // using source that attempts to register spec outside of namespace
     
+    describe('using source that attempts to register spec outside of source', function() {
+      var container = new Container();
+      container.use('auth', require('./fixtures/sources/hl-auth'));
+      container.use('auth', require('./fixtures/sources/hl-auth-password'));
+      
+      it('should throw an error', function() {
+        expect(function() {
+          container.use('auth', require('./fixtures/sources/out-of-source'));
+        }).to.throw(Error, 'basic not found in source');
+      });
+    }); // using source that attempts to register spec outside of namespace
+    
   }); // higher-level functionality
   
 });
