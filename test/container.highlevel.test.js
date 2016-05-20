@@ -120,6 +120,17 @@ describe('Container', function() {
       });
     }); // using auth source twice, under different namespaces with different plugins
     
+    describe('using source that attempts to register spec outside of namespace', function() {
+      var container = new Container();
+      container.use(require('./fixtures/sources/hl-common'));
+      
+      it('should throw an error', function() {
+        expect(function() {
+          container.use('opt', require('./fixtures/sources/out-of-ns'));
+        }).to.throw(Error, '../logger is not within source namespace');
+      });
+    }); // using source that attempts to register spec outside of namespace
+    
   }); // higher-level functionality
   
 });
