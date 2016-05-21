@@ -1,6 +1,8 @@
 exports = module.exports = function auth(id) {
   var map = {
-    'authenticator': './authenticator'
+    'authenticator': './authenticator',
+    'fubar/notfound': './fubar/notfound',
+    'fubar/outofns': './fubar/outofns'
   };
   
   var mid = map[id];

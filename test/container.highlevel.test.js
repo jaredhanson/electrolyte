@@ -138,8 +138,33 @@ describe('Container', function() {
       
       it('should throw an error', function() {
         expect(function() {
-          container.use('auth', require('./fixtures/sources/out-of-source'));
+          container.use('auth', require('./fixtures/sources/hl-auth-fubar'));
         }).to.throw(Error, 'basic not found in source');
+      });
+    }); // using source that attempts to register spec outside of namespace
+    
+    describe('creating object with injected container, that causes not found error', function() {
+      var container = new Container();
+      container.use('auth', require('./fixtures/sources/hl-auth'));
+      container.use('auth/schemes', require('./fixtures/sources/hl-auth-password'));
+      
+      it('should throw an error', function() {
+        expect(function() {
+          container.create('auth/fubar/notfound');
+        }).to.throw(Error, 'Unable to create object "auth/schemes/fubar" required by: auth/fubar/notfound');
+      });
+    }); // using source that attempts to register spec outside of namespace
+    
+    describe('creating object with injected container, that causes outside of namespace error', function() {
+      var container = new Container();
+      container.use(require('./fixtures/sources/hl-common'));
+      container.use('auth', require('./fixtures/sources/hl-auth'));
+      container.use('auth/schemes', require('./fixtures/sources/hl-auth-password'));
+      
+      it('should throw an error', function() {
+        expect(function() {
+          container.create('auth/fubar/outofns');
+        }).to.throw(Error, '../logger not within namespace');
       });
     }); // using source that attempts to register spec outside of namespace
     
