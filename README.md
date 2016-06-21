@@ -132,7 +132,7 @@ automatically load and instantiate it.  The loader needs to be configured with
 location where an application's components are found:
 
 ```javascript
-IoC.use(IoC.node('app/components'));
+IoC.use(IoC.dir('app/components'));
 ```
 
 #### @require vs require()
