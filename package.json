@@ -38,16 +38,19 @@
   ],
   "main": "./lib",
   "dependencies": {
+    "bluebird": "^3.4.1",
     "canonical-path": "0.0.2",
     "debug": "^2.2.0",
     "depd": "^1.0.1",
     "scripts": "0.1.x"
   },
   "devDependencies": {
+    "chai": "3.x.x",
+    "chai-express-handler": "git://github.com/jaredhanson/chai-express-handler.git",
     "make-node": "0.3.x",
     "mocha": "2.x.x",
-    "chai": "3.x.x",
-    "chai-express-handler": "git://github.com/jaredhanson/chai-express-handler.git"
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   },
   "engines": {
     "node": "*"
