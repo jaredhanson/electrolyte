@@ -1,16 +1,4 @@
-exports = module.exports = function authPassword(id) {
-  var map = {
-    'basic': './basic',
-    'digest': './digest'
-  };
-  
-  var mid = map[id];
-  if (mid) {
-    return require(mid);
-  }
+exports = module.exports = {
+  'basic': require('./basic'),
+  'digest': require('./digest')
 };
-
-exports.used = function(container) {
-  container.add('basic');
-  container.add('digest');
-}
