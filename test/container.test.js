@@ -474,9 +474,20 @@ describe('Container', function() {
     var container = new Container();
     container.use('cache', memory);
     
-    it('should create Memory implementation of cache', function() {
-      var obj = container.create('cache/cache');
-      expect(obj).to.be.an.instanceof(memory.MemoryCache);
+    describe('creating implementation of cache', function() {
+      var cache;
+      
+      before(function(done) {
+        container.create('cache/cache')
+          .then(function(obj) {
+            cache = obj;
+            done();
+          }, done);
+      })
+      
+      it('should create Memory implementation of cache', function() {
+        expect(cache).to.be.an.instanceof(memory.MemoryCache);
+      });
     });
   });
   
@@ -487,24 +498,50 @@ describe('Container', function() {
     container.use('cache', redis);
     container.use('cache/pages', redis);
     
-    var cache1 = container.create('cache/cache');
-    var cache2 = container.create('cache/cache');
+    var pcache1 = container.create('cache/cache');
+    var pcache2 = container.create('cache/cache');
+    var cache1, cache2;
     
-    var pagecache1 = container.create('cache/pages/cache');
-    var pagecache2 = container.create('cache/pages/cache');
+    var ppagecache1 = container.create('cache/pages/cache');
+    var ppagecache2 = container.create('cache/pages/cache');
+    var pagecache1, pagecache2;
     
-    it('should create singleton instance of Redis cache in first namespace', function() {
-      expect(cache1).to.be.an.instanceof(redis.RedisCache);
-      expect(cache1).to.be.equal(cache2);
-    });
     
-    it('should create singleton instance of Redis cache in second namespace', function() {
-      expect(pagecache1).to.be.an.instanceof(redis.RedisCache);
-      expect(pagecache1).to.be.equal(pagecache2);
-    });
-    
-    it('should create separate instances of Redis cache in different namespaces', function() {
-      expect(cache1).to.not.be.equal(pagecache1);
+    describe('creating singleton instance of Redis cache in first namespace', function() {
+      before(function(done) {
+        Promise.all([pcache1, pcache2])
+          .then(function(args) {
+            cache1 = args[0];
+            cache2 = args[1];
+            done();
+          }, done);
+      })
+      
+      it('should create Redis implementation of cache', function() {
+        expect(cache1).to.be.an.instanceof(redis.RedisCache);
+        expect(cache1).to.be.equal(cache2);
+      });
+      
+      describe('and then creating singleton instance of Redis cache in second namespace', function() {
+        before(function(done) {
+          Promise.all([ppagecache1, ppagecache2])
+            .then(function(args) {
+              pagecache1 = args[0];
+              pagecache2 = args[1];
+              done();
+            }, done);
+        })
+      
+        it('should create Redis implementation of cache', function() {
+          expect(pagecache1).to.be.an.instanceof(redis.RedisCache);
+          expect(pagecache1).to.be.equal(pagecache2);
+        });
+        
+        it('should create separate instances of Redis cache in different namespaces', function() {
+          expect(cache1).to.not.be.equal(pagecache1);
+        });
+      });
+      
     });
   });
   
