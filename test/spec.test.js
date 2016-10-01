@@ -16,7 +16,7 @@ describe('Spec', function() {
     
   });
   
-  describe('#create', function() {
+  describe.skip('#create', function() {
     var containerApi = {create: function() {}, createAsync: function() {}}
       , sandbox;
 
