@@ -57,34 +57,114 @@ describe('Container', function() {
       
       describe('factory', function() {
         
-        it('should create object', function() {
-          var obj = container.create('factory');
-          expect(obj).to.be.an.instanceof(Object);
+        describe('creating an object', function() {
+          var p = container.create('factory');
+          
+          it('should return promise', function() {
+            expect(p).to.be.an.instanceof(Promise);
+          });
+          
+          describe('resolving promise', function() {
+            var obj;
+            
+            before(function(done) {
+              p.then(function(o) {
+                obj = o;
+                done();
+              }, done);
+            });
+            
+            it('should supply object', function() {
+              expect(obj).to.be.an.instanceof(Object);
+              expect(obj).to.not.be.an.instanceof(Promise);
+            });
+          });
         });
         
-        it('should create multiple instances of object', function() {
-          var obj1 = container.create('factory');
-          var obj2 = container.create('factory');
-          expect(obj1).to.be.an.instanceof(Object);
-          expect(obj2).to.be.an.instanceof(Object);
-          expect(obj1).to.not.be.equal(obj2);
+        describe('creating multiple instances of object', function() {
+          var p1 = container.create('factory')
+            , p2 = container.create('factory');
+          
+          it('should return multiple promises', function() {
+            expect(p1).to.be.an.instanceof(Promise);
+            expect(p2).to.be.an.instanceof(Promise);
+            expect(p1).to.not.be.equal(p2);
+          });
+        
+          describe('resolving multiple promises', function() {
+            var obj1, obj2;
+            
+            before(function(done) {
+              Promise.all([p1, p2]).then(function(args) {
+                obj1 = args[0];
+                obj2 = args[1];
+                done();
+              }, done);
+            });
+        
+            it('should supply multiple objects', function() {
+              expect(obj1).to.be.an.instanceof(Object);
+              expect(obj2).to.be.an.instanceof(Object);
+              expect(obj1).to.not.be.equal(obj2);
+              expect(obj1).to.not.be.an.instanceof(Promise);
+              expect(obj2).to.not.be.an.instanceof(Promise);
+            });
+          });
         });
         
       }); // factory
       
       describe('constructor', function() {
         
-        it('should create object', function() {
-          var obj = container.create('ctor');
-          expect(obj.constructor.name).to.equal('Building')
+        describe('creating an object', function() {
+          var p = container.create('ctor');
+          
+          it('should return promise', function() {
+            expect(p).to.be.an.instanceof(Promise);
+          });
+          
+          describe('resolving promise', function() {
+            var obj;
+            
+            before(function(done) {
+              p.then(function(o) {
+                obj = o;
+                done();
+              }, done);
+            });
+            
+            it('should supply object', function() {
+              expect(obj.constructor.name).to.equal('Building')
+            });
+          });
         });
         
-        it('should create multiple instances of object', function() {
-          var obj1 = container.create('ctor');
-          var obj2 = container.create('ctor');
-          expect(obj1.constructor.name).to.equal('Building')
-          expect(obj1.constructor.name).to.equal('Building')
-          expect(obj1).to.not.be.equal(obj2);
+        describe('creating multiple instances of object', function() {
+          var p1 = container.create('ctor');
+          var p2 = container.create('ctor');
+        
+          it('should return promise', function() {
+            expect(p1).to.be.an.instanceof(Promise);
+            expect(p2).to.be.an.instanceof(Promise);
+          });
+        
+          describe('resolving promise', function() {
+            var obj1, obj2;
+          
+            before(function(done) {
+              Promise.all([p1, p2]).then(function(args) {
+                obj1 = args[0];
+                obj2 = args[1];
+                done();
+              }, done);
+            });
+          
+            it('should supply multiple object', function() {
+              expect(obj1.constructor.name).to.equal('Building')
+              expect(obj1.constructor.name).to.equal('Building')
+              expect(obj1).to.not.be.equal(obj2);
+            });
+          });
         });
         
       }); // constructor
@@ -93,34 +173,110 @@ describe('Container', function() {
         
         describe('object', function() {
           
-          it('should create object', function() {
-            var obj = container.create('literal/object');
-            expect(obj).to.deep.equal({ greeting: 'Hello', name: 'object' });
+          describe('creating an object', function() {
+            var p = container.create('literal/object');
+          
+            it('should return promise', function() {
+              expect(p).to.be.an.instanceof(Promise);
+            });
+          
+            describe('resolving promise', function() {
+              var obj;
+            
+              before(function(done) {
+                p.then(function(o) {
+                  obj = o;
+                  done();
+                }, done);
+              });
+            
+              it('should supply object', function() {
+                expect(obj).to.deep.equal({ greeting: 'Hello', name: 'object' });
+              });
+            });
           });
+          
+          describe('creating multiple instances of object', function() {
+            var p1 = container.create('literal/object');
+            var p2 = container.create('literal/object');
         
-          it('should not create multiple instances of object', function() {
-            var obj1 = container.create('literal/object');
-            var obj2 = container.create('literal/object');
-            expect(obj1).to.deep.equal({ greeting: 'Hello', name: 'object' });
-            expect(obj2).to.deep.equal({ greeting: 'Hello', name: 'object' });
-            expect(obj1).to.be.equal(obj2);
+            it('should return promise', function() {
+              expect(p1).to.be.an.instanceof(Promise);
+              expect(p2).to.be.an.instanceof(Promise);
+            });
+        
+            describe('resolving promise', function() {
+              var obj1, obj2;
+          
+              before(function(done) {
+                Promise.all([p1, p2]).then(function(args) {
+                  obj1 = args[0];
+                  obj2 = args[1];
+                  done();
+                }, done);
+              });
+          
+              it('should supply multiple object', function() {
+                expect(obj1).to.deep.equal({ greeting: 'Hello', name: 'object' });
+                expect(obj2).to.deep.equal({ greeting: 'Hello', name: 'object' });
+                expect(obj1).to.be.equal(obj2);
+              });
+            });
           });
           
         }); // object
         
         describe('string', function() {
           
-          it('should create object', function() {
-            var obj = container.create('literal/string');
-            expect(obj).to.equal('Hello, string');
+          describe('creating an object', function() {
+            var p = container.create('literal/string');
+          
+            it('should return promise', function() {
+              expect(p).to.be.an.instanceof(Promise);
+            });
+          
+            describe('resolving promise', function() {
+              var obj;
+            
+              before(function(done) {
+                p.then(function(o) {
+                  obj = o;
+                  done();
+                }, done);
+              });
+            
+              it('should supply object', function() {
+                expect(obj).to.equal('Hello, string');
+              });
+            });
           });
+          
+          describe('creating multiple instances of object', function() {
+            var p1 = container.create('literal/string');
+            var p2 = container.create('literal/string');
         
-          it('should not create multiple instances of object', function() {
-            var obj1 = container.create('literal/string');
-            var obj2 = container.create('literal/string');
-            expect(obj1).to.equal('Hello, string');
-            expect(obj2).to.equal('Hello, string');
-            expect(obj1).to.be.equal(obj2);
+            it('should return promise', function() {
+              expect(p1).to.be.an.instanceof(Promise);
+              expect(p2).to.be.an.instanceof(Promise);
+            });
+        
+            describe('resolving promise', function() {
+              var obj1, obj2;
+          
+              before(function(done) {
+                Promise.all([p1, p2]).then(function(args) {
+                  obj1 = args[0];
+                  obj2 = args[1];
+                  done();
+                }, done);
+              });
+          
+              it('should supply multiple object', function() {
+                expect(obj1).to.equal('Hello, string');
+                expect(obj2).to.equal('Hello, string');
+                expect(obj1).to.be.equal(obj2);
+              });
+            });
           });
           
         }); // string
