@@ -283,16 +283,58 @@ describe('Container', function() {
         
         describe('function', function() {
           
-          it('should create object', function() {
-            var obj = container.create('literal/function');
-            expect(obj).to.be.a('function');
-            expect(obj()).to.equal('Hello, function');
+          describe('creating an object', function() {
+            var p = container.create('literal/function');
+          
+            it('should return promise', function() {
+              expect(p).to.be.an.instanceof(Promise);
+            });
+          
+            describe('resolving promise', function() {
+              var obj;
+            
+              before(function(done) {
+                p.then(function(o) {
+                  obj = o;
+                  done();
+                }, done);
+              });
+            
+              it('should supply object', function() {
+                expect(obj).to.be.a('function');
+                expect(obj()).to.equal('Hello, function');
+              });
+            });
           });
+          
+          describe('creating multiple instances of object', function() {
+            var p1 = container.create('literal/function');
+            var p2 = container.create('literal/function');
         
-          it('should not create multiple instances of object', function() {
-            var obj1 = container.create('literal/function');
-            var obj2 = container.create('literal/function');
-            expect(obj1).to.be.equal(obj2);
+            it('should return promise', function() {
+              expect(p1).to.be.an.instanceof(Promise);
+              expect(p2).to.be.an.instanceof(Promise);
+            });
+        
+            describe('resolving promise', function() {
+              var obj1, obj2;
+          
+              before(function(done) {
+                Promise.all([p1, p2]).then(function(args) {
+                  obj1 = args[0];
+                  obj2 = args[1];
+                  done();
+                }, done);
+              });
+          
+              it('should not supply multiple object', function() {
+                expect(obj1).to.be.a('function');
+                expect(obj1()).to.equal('Hello, function');
+                expect(obj2).to.be.a('function');
+                expect(obj2()).to.equal('Hello, function');
+                expect(obj1).to.be.equal(obj2);
+              });
+            });
           });
           
         }); // function
