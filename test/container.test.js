@@ -553,9 +553,20 @@ describe('Container', function() {
     container.use('cache', memory);
     container.use('cache', redis);
     
-    it('should create Redis implementation of cache', function() {
-      var obj = container.create('cache/cache');
-      expect(obj).to.be.an.instanceof(redis.RedisCache);
+    describe('creating implementation of cache', function() {
+      var cache;
+      
+      before(function(done) {
+        container.create('cache/cache')
+          .then(function(obj) {
+            cache = obj;
+            done();
+          }, done);
+      })
+      
+      it('should create Redis implementation of cache', function() {
+        expect(cache).to.be.an.instanceof(redis.RedisCache);
+      });
     });
   });
   
@@ -563,9 +574,20 @@ describe('Container', function() {
     var container = new Container();
     container.use(require('../lib/sources/node_modules')());
 
-    it('should return the same module as require', function() {
-      var obj = container.create('dgram');
-      expect(obj).to.be.equal(require('dgram'));
+    describe('creating module', function() {
+      var cache;
+      
+      before(function(done) {
+        container.create('dgram')
+          .then(function(obj) {
+            cache = obj;
+            done();
+          }, done);
+      })
+      
+      it('hould return the same module as require', function() {
+        expect(cache).to.be.equal(require('dgram'));
+      });
     });
   });
   
