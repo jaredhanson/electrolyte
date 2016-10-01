@@ -9,23 +9,67 @@ describe('Container', function() {
     var container = new Container();
     
     describe('unknown component', function() {
-      it('should throw an error when created without a parent', function() {
-        expect(function() {
-          var obj = container.create('unknown');
-        }).to.throw(Error, 'Unable to create object "unknown" required by: unknown');
+      
+      describe('created without a parent', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('unknown')
+            .then(function(obj) {
+              done(new Error('should not create object'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal('Unable to create object "unknown" required by: unknown');
+        });
       });
       
-      it('should throw an error when created with a parent', function() {
-        expect(function() {
-          var obj = container.create('unknown', { id: 'main' });
-        }).to.throw(Error, 'Unable to create object "unknown" required by: main');
+      describe('created with a parent', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('unknown', { id: 'main' })
+            .then(function(obj) {
+              done(new Error('should not create object'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal('Unable to create object "unknown" required by: main');
+        });
       });
       
-      it('should throw an error when created with a parent, lacking an id', function() {
-        expect(function() {
-          var obj = container.create('unknown', {});
-        }).to.throw(Error, 'Unable to create object "unknown" required by: unknown');
+      describe('created with a parent, lacking an id', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('unknown', {})
+            .then(function(obj) {
+              done(new Error('should not create object'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal('Unable to create object "unknown" required by: unknown');
+        });
       });
+      
     });
     
     describe.skip('async component', function() {
