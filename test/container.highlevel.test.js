@@ -58,10 +58,21 @@ describe('Container', function() {
                                                 'http://example.test/ap/Authenticator@0' ]);
       });
     
-      it('should create authenticator', function() {
-        var authenticator = container.create('auth/authenticator');
-        expect(authenticator).to.be.an('object');
-        expect(authenticator.schemes).to.deep.equal([]);
+      describe('create authenticator', function() {
+        var authenticator;
+        
+        before(function(done) {
+          container.create('auth/authenticator')
+            .then(function(obj) {
+              authenticator = obj;
+              done();
+            }, done);
+        })
+        
+        it('should not register plugins', function() {
+          expect(authenticator).to.be.an('object');
+          expect(authenticator.schemes).to.deep.equal([]);
+        });
       });
     }); // using auth source, without plugins
     
@@ -70,12 +81,22 @@ describe('Container', function() {
       container.use('auth', require('./fixtures/sources/hl-auth'));
       container.use('auth', require('./fixtures/sources/hl-auth-password'));
     
-      it('should create authenticator', function() {
-        var authenticator = container.create('auth/authenticator');
-        expect(authenticator).to.be.an('object');
-        expect(authenticator.schemes).to.have.length(2);
-        expect(authenticator.schemes[0].scheme).to.equal('basic');
-        expect(authenticator.schemes[1].scheme).to.equal('digest');
+      describe('create authenticator', function() {
+        var authenticator;
+        
+        before(function(done) {
+          container.create('auth/authenticator')
+            .then(function(obj) {
+              authenticator = obj;
+              done();
+            }, done);
+        })
+    
+        it('should register plugins', function() {
+          expect(authenticator.schemes).to.have.length(2);
+          expect(authenticator.schemes[0].scheme).to.equal('basic');
+          expect(authenticator.schemes[1].scheme).to.equal('digest');
+        });
       });
     }); // using auth source, with password plugins
     
@@ -85,14 +106,24 @@ describe('Container', function() {
       container.use('auth/plugins', require('./fixtures/sources/hl-auth-password'));
       container.use('auth/plugins', require('./fixtures/sources/hl-auth-token'));
     
-      it('should create authenticator', function() {
-        var authenticator = container.create('auth/authenticator');
-        expect(authenticator).to.be.an('object');
-        expect(authenticator.schemes).to.have.length(4);
-        expect(authenticator.schemes[0].scheme).to.equal('basic');
-        expect(authenticator.schemes[1].scheme).to.equal('digest');
-        expect(authenticator.schemes[2].scheme).to.equal('bearer');
-        expect(authenticator.schemes[3].scheme).to.equal('oauth');
+      describe('create authenticator', function() {
+        var authenticator;
+        
+        before(function(done) {
+          container.create('auth/authenticator')
+            .then(function(obj) {
+              authenticator = obj;
+              done();
+            }, done);
+        })
+    
+        it('should register plugins', function() {
+          expect(authenticator.schemes).to.have.length(4);
+          expect(authenticator.schemes[0].scheme).to.equal('basic');
+          expect(authenticator.schemes[1].scheme).to.equal('digest');
+          expect(authenticator.schemes[2].scheme).to.equal('bearer');
+          expect(authenticator.schemes[3].scheme).to.equal('oauth');
+        });
       });
     }); // using auth source, with password and token plugins
     
@@ -103,20 +134,40 @@ describe('Container', function() {
       container.use('auth/token', require('./fixtures/sources/hl-auth'));
       container.use('auth/token', require('./fixtures/sources/hl-auth-token'));
     
-      it('should create password authenticator', function() {
-        var authenticator = container.create('auth/password/authenticator');
-        expect(authenticator).to.be.an('object');
-        expect(authenticator.schemes).to.have.length(2);
-        expect(authenticator.schemes[0].scheme).to.equal('basic');
-        expect(authenticator.schemes[1].scheme).to.equal('digest');
+      describe('create password authenticator', function() {
+        var authenticator;
+        
+        before(function(done) {
+          container.create('auth/password/authenticator')
+            .then(function(obj) {
+              authenticator = obj;
+              done();
+            }, done);
+        })
+        
+        it('should register plugins', function() {
+          expect(authenticator.schemes).to.have.length(2);
+          expect(authenticator.schemes[0].scheme).to.equal('basic');
+          expect(authenticator.schemes[1].scheme).to.equal('digest');
+        });
       });
       
-      it('should create token authenticator', function() {
-        var authenticator = container.create('auth/token/authenticator');
-        expect(authenticator).to.be.an('object');
-        expect(authenticator.schemes).to.have.length(2);
-        expect(authenticator.schemes[0].scheme).to.equal('bearer');
-        expect(authenticator.schemes[1].scheme).to.equal('oauth');
+      describe('create token authenticator', function() {
+        var authenticator;
+        
+        before(function(done) {
+          container.create('auth/token/authenticator')
+            .then(function(obj) {
+              authenticator = obj;
+              done();
+            }, done);
+        })
+        
+        it('should register plugins', function() {
+          expect(authenticator.schemes).to.have.length(2);
+          expect(authenticator.schemes[0].scheme).to.equal('bearer');
+          expect(authenticator.schemes[1].scheme).to.equal('oauth');
+        });
       });
     }); // using auth source twice, under different namespaces with different plugins
     
@@ -125,10 +176,24 @@ describe('Container', function() {
       container.use('auth', require('./fixtures/sources/hl-auth'));
       container.use('auth/schemes', require('./fixtures/sources/hl-auth-password'));
       
-      it('should throw an error', function() {
-        expect(function() {
-          container.create('auth/fubar/notfound');
-        }).to.throw(Error, 'Unable to create object "auth/schemes/fubar" required by: auth/fubar/notfound');
+      describe('creating authenticator', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('auth/fubar/notfound')
+            .then(function(obj) {
+              done(new Error('should not create authenticator'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal('Unable to create object "auth/schemes/fubar" required by: auth/fubar/notfound');
+        });
       });
     }); // using source that attempts to register spec outside of namespace
     
@@ -138,10 +203,24 @@ describe('Container', function() {
       container.use('auth', require('./fixtures/sources/hl-auth'));
       container.use('auth/schemes', require('./fixtures/sources/hl-auth-password'));
       
-      it('should throw an error', function() {
-        expect(function() {
-          container.create('auth/fubar/outofns');
-        }).to.throw(Error, '../logger not within namespace');
+      describe('creating authenticator', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('auth/fubar/outofns')
+            .then(function(obj) {
+              done(new Error('should not create authenticator'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal('../logger not within namespace');
+        });
       });
     }); // using source that attempts to register spec outside of namespace
     
