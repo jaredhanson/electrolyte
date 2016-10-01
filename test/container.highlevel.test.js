@@ -23,21 +23,33 @@ describe('Container', function() {
         expect(spec.implements).to.deep.equal([ 'http://example.test/Logger' ]);
       });
     
-      it('should create logger', function() {
-        var obj = container.create('logger');
-        expect(obj).to.be.an('object');
-      });
+      describe('create logger', function() {
+        var obj;
     
-      it('should still have registered specs after creating object', function() {
-        var specs = container.specs();
-        expect(specs).to.be.an('array');
-        expect(specs).to.have.length(1);
+        before(function(done) {
+          container.create('logger')
+            .then(function(o) {
+              obj = o;
+              done();
+            }, done);
+        })
+    
+        it('should create logger', function() {
+          expect(obj).to.be.an('object');
+        });
+    
+        it('should still have registered specs after creating object', function() {
+          var specs = container.specs();
+          expect(specs).to.be.an('array');
+          expect(specs).to.have.length(1);
       
-        var spec = specs[0];
-        expect(spec.id).to.equal('logger');
-        expect(spec.singleton).to.equal(true);
-        expect(spec.dependencies).to.deep.equal([]);
-        expect(spec.implements).to.deep.equal([ 'http://example.test/Logger' ]);
+          var spec = specs[0];
+          expect(spec.id).to.equal('logger');
+          expect(spec.singleton).to.equal(true);
+          expect(spec.dependencies).to.deep.equal([]);
+          expect(spec.implements).to.deep.equal([ 'http://example.test/Logger' ]);
+        });
+        
       });
     }); // using common source
     
