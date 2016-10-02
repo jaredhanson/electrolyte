@@ -418,6 +418,7 @@ describe('Container', function() {
       expect(specs).to.have.length(0);
     });
     
+    
     describe('create logger', function() {
       var obj;
   
@@ -433,16 +434,24 @@ describe('Container', function() {
         expect(obj).to.be.an.instanceof(common.Logger);
       });
       
+      it('should have registered specs after creating object', function() {
+        var specs = container.specs();
+        expect(specs).to.be.an('array');
+        expect(specs).to.have.length(1);
+      
+        var spec = specs[0];
+        expect(spec.id).to.equal('logger');
+        expect(spec.singleton).to.equal(true);
+        expect(spec.dependencies).to.deep.equal([]);
+        expect(spec.implements).to.deep.equal([]);
+      });
     });
     
     describe('create singleton instance of logger', function() {
-      var plogger1 = container.create('logger')
-        , plogger2 = container.create('logger')
-      
       var logger1, logger2;
   
       before(function(done) {
-        Promise.all([ plogger1, plogger2 ])
+        Promise.all([ container.create('logger'), container.create('logger') ])
           .then(function(args) {
             logger1 = args[0];
             logger2 = args[1];
@@ -453,27 +462,27 @@ describe('Container', function() {
       it('should create singleton instance of logger', function() {
         expect(logger1).to.be.equal(logger2);
       });
+    });
+    
+    describe('create unknown object', function() {
+      var error;
       
-    });
-    
-    it('should throw an error when creating unknown object', function() {
-      expect(function() {
-        container.create('fubar');
-      }).to.throw(Error, 'Unable to create object "fubar" required by: unknown');
-    });
-    
-    it('should have registered specs after creating object', function() {
-      var specs = container.specs();
-      expect(specs).to.be.an('array');
-      expect(specs).to.have.length(1);
+      before(function(done) {
+        container.create('fubar')
+          .then(function(obj) {
+            done(new Error('should not create object'));
+          })
+          .catch(function(err) {
+            error = err;
+            done();
+          });
+      })
       
-      var spec = specs[0];
-      expect(spec.id).to.equal('logger');
-      expect(spec.singleton).to.equal(true);
-      expect(spec.dependencies).to.deep.equal([]);
-      expect(spec.implements).to.deep.equal([]);
+      it('should fail with error', function() {
+        expect(error).to.be.an.instanceOf(Error);
+        expect(error.message).to.equal('Unable to create object "fubar" required by: unknown');
+      });
     });
-    
   });
   
 
