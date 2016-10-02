@@ -554,18 +554,13 @@ describe('Container', function() {
     container.use('cache', redis);
     container.use('cache/pages', redis);
     
-    var pcache1 = container.create('cache/cache');
-    var pcache2 = container.create('cache/cache');
     var cache1, cache2;
-    
-    var ppagecache1 = container.create('cache/pages/cache');
-    var ppagecache2 = container.create('cache/pages/cache');
     var pagecache1, pagecache2;
     
     
     describe('creating singleton instance of Redis cache in first namespace', function() {
       before(function(done) {
-        Promise.all([pcache1, pcache2])
+        Promise.all([container.create('cache/cache'), container.create('cache/cache')])
           .then(function(args) {
             cache1 = args[0];
             cache2 = args[1];
@@ -580,7 +575,7 @@ describe('Container', function() {
       
       describe('and then creating singleton instance of Redis cache in second namespace', function() {
         before(function(done) {
-          Promise.all([ppagecache1, ppagecache2])
+          Promise.all([container.create('cache/pages/cache'), container.create('cache/pages/cache')])
             .then(function(args) {
               pagecache1 = args[0];
               pagecache2 = args[1];
@@ -597,7 +592,6 @@ describe('Container', function() {
           expect(cache1).to.not.be.equal(pagecache1);
         });
       });
-      
     });
   });
   
@@ -631,18 +625,18 @@ describe('Container', function() {
     container.use(require('../lib/sources/node_modules')());
 
     describe('creating module', function() {
-      var cache;
+      var mod;
       
       before(function(done) {
         container.create('dgram')
           .then(function(obj) {
-            cache = obj;
+            mod = obj;
             done();
           }, done);
       })
       
       it('hould return the same module as require', function() {
-        expect(cache).to.be.equal(require('dgram'));
+        expect(mod).to.be.equal(require('dgram'));
       });
     });
   });
