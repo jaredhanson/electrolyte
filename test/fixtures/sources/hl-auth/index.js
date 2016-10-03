@@ -1,16 +1,12 @@
-exports = module.exports = function auth(id) {
-  var map = {
-    'authenticator': './authenticator',
-    'fubar/notfound': './fubar/notfound',
-    'fubar/outofns': './fubar/outofns'
-  };
-  
-  var mid = map[id];
-  if (mid) {
-    return require(mid);
-  }
+exports = module.exports = {
+  'authenticator': require('./authenticator')
 };
 
-exports.used = function(container) {
-  container.add('authenticator');
-}
+exports.load = function(id) {
+  try {
+    return require('./' + id);
+  } catch (ex) {
+    if (ex.code == 'MODULE_NOT_FOUND') { return; }
+    throw ex;
+  }
+};

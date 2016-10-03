@@ -1,16 +1,4 @@
-exports = module.exports = function authToken(id) {
-  var map = {
-    'bearer': './bearer',
-    'oauth': './oauth'
-  };
-  
-  var mid = map[id];
-  if (mid) {
-    return require(mid);
-  }
+exports = module.exports = {
+  'bearer': require('./bearer'),
+  'oauth': require('./oauth')
 };
-
-exports.used = function(container) {
-  container.add('bearer');
-  container.add('oauth');
-}

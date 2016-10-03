@@ -120,29 +120,6 @@ describe('Container', function() {
       });
     }); // using auth source twice, under different namespaces with different plugins
     
-    describe('using source that attempts to register spec outside of namespace', function() {
-      var container = new Container();
-      container.use(require('./fixtures/sources/hl-common'));
-      
-      it('should throw an error', function() {
-        expect(function() {
-          container.use('opt', require('./fixtures/sources/out-of-ns'));
-        }).to.throw(Error, '../logger not found in source');
-      });
-    }); // using source that attempts to register spec outside of namespace
-    
-    describe('using source that attempts to register spec outside of source', function() {
-      var container = new Container();
-      container.use('auth', require('./fixtures/sources/hl-auth'));
-      container.use('auth', require('./fixtures/sources/hl-auth-password'));
-      
-      it('should throw an error', function() {
-        expect(function() {
-          container.use('auth', require('./fixtures/sources/hl-auth-fubar'));
-        }).to.throw(Error, 'basic not found in source');
-      });
-    }); // using source that attempts to register spec outside of namespace
-    
     describe('creating object with injected container, that causes not found error', function() {
       var container = new Container();
       container.use('auth', require('./fixtures/sources/hl-auth'));
