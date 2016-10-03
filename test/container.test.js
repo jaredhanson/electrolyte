@@ -1,5 +1,5 @@
 /* global describe, it, expect */
-
+var Promise = require('bluebird');
 var Container = require('../lib/container');
 
 
@@ -28,6 +28,28 @@ describe('Container', function() {
       });
     });
     
+    describe('async component', function() {
+      var container = new Container();
+      container.use(require('./fixtures/sources/async'));
+
+      it('should work but warn when created synchronously without @async annotation', function() {
+        var obj = container.create('asyncLike');
+        expect(obj).to.be.instanceof(Promise);
+      });
+
+      it('should throw an error when created synchronously', function() {
+        expect(function() {
+          var obj = container.create('asyncB');
+        }).to.throw(Error, 'Container#create cannot be called on async dependency: "asyncB"');
+      });
+
+      it('should throw an error when created synchronously via dependency', function() {
+        expect(function() {
+          var obj = container.create('asyncFailure');
+        }).to.throw(Error, 'Container#create cannot be called on async dependency: "asyncB"');
+      });
+    });
+
     describe('patterns', function() {
       
       var container = new Container();
@@ -161,7 +183,7 @@ describe('Container', function() {
       var logger2 = container.create('logger');
       expect(logger1).to.be.equal(logger2);
     });
-    
+
     it('should throw an error when creating unknown object', function() {
       expect(function() {
         container.create('fubar');
@@ -181,6 +203,45 @@ describe('Container', function() {
     });
   });
   
+
+  describe('using async source', function() {
+    var asyncSource = require('./fixtures/sources/async');
+
+    var container = new Container();
+    container.use(asyncSource);
+
+    it('should not have any registered specs prior to creating object', function() {
+      var specs = container.specs();
+      expect(specs).to.be.an('array');
+      expect(specs).to.have.length(0);
+    });
+
+    it('should create asyncB', function() {
+      return container.createAsync('asyncB').then(function (obj) {
+        expect(obj).to.eql({waited: {done: 'B'}});
+      });
+    });
+
+    it('should create singleton instance of asyncB', function() {
+      return Promise.all([
+        container.createAsync('asyncB'),
+        container.createAsync('asyncB')
+      ]).spread(function (asyncB1, asyncB2) {
+        expect(asyncB1).to.be.equal(asyncB2);
+      });
+    });
+
+    it('should create asyncA', function() {
+      return container.createAsync('asyncA').then(function (obj) {
+        expect(obj).to.eql([
+          [{done: 'B'}, {done: 'C'}],
+          {waited: {done: 'B'}},
+          {waited: {done: 'C'}}
+        ]);
+      });
+    });
+  });
+
   describe('using Memory cache source', function() {
     var memory = require('./fixtures/sources/cache-memory');
     

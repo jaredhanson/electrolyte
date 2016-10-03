@@ -92,6 +92,48 @@ exports['@require'] = [ 'settings' ];
 Also very simple.  A function is exported which creates a database connection.
 And those annotations appear again.
 
+#### Async Components
+
+Async components are defined in an identical manner to traditional components
+except that the factory function should return a promise. An additional annotation
+is used to signify that the dependency should be treated as asynchronous.
+
+Let's rewrite the database component above slightly to return a promise.
+
+```javascript
+var mysql = require('mysql');
+
+exports = module.exports = function(settings) {
+  return mysql.connectAsPromise({
+    host: settings.dbHost,
+    port: settings.dbPort
+  }).then(function (conn) {
+    // do something clever
+    return conn;
+  });
+}
+
+exports['@async'] = true;
+exports['@singleton'] = true;
+exports['@require'] = [ 'settings' ];
+```
+
+Let's also define a users model that relies on the database component (saved as `users.js`).
+
+```javascript
+exports = module.exports = function(database) {
+  return {
+    create: function (name, email, password) {
+      return database.execute('INSERT INTO users ...');
+    }
+  };
+}
+
+exports['@async'] = true;
+exports['@singleton'] = true;
+exports['@require'] = [ 'database' ];
+```
+
 #### Annotations
 
 Annotations provide an extra bit of metadata about the component, which
@@ -103,6 +145,11 @@ Electrolyte uses to automatically wire together an application.
 
 - `@singleton`  Indicates that the component returns a singleton object, which
   should be shared by all components in the application.
+
+- `@async`  Indicates that the component returns a promise OR depends on a
+  component that is computed asynchronously. An async component can only be created
+  using the `.createAsync` method. Attempting to create an async component using
+  the standard `.create` will throw an exception.
 
 #### Creating Components
 
@@ -124,6 +171,31 @@ component.  The database connection would then be returned from `IoC.create`.
 
 This automatic instantiation and injection of components eliminates the
 boilerplate plumbing many application need for initialization.
+
+#### Creating Async Components
+
+Again, components are created by asking the IoC container to create them:
+
+```javascript
+var IoC = require('electrolyte');
+
+var usersPromise = IoC.createAsync('users');
+
+usersPromise.then(function (users) {
+  ...
+});
+```
+
+Here as well electrolyte is smart enough to automatically traverse a component's
+dependencies, correctly wiring together the complete object structure and waiting
+for each promise to resolve along the way.
+
+In the case of the users model above, Electrolyte would first initialize the
+`settings` component, and pass the result as an argument to the `database`
+component. Electrolyte would then wait for the database connection promise to
+resolve before passing the resulting value to the users component. `IoC.createAsync`
+then returns a promise that resolves to the object defined by the users component
+after the all of its dependencies resolve.
 
 #### Configure the Loader
 
@@ -192,6 +264,9 @@ while mocking out network access entirely.
 
 - __[Express](https://github.com/jaredhanson/electrolyte/tree/master/examples/express)__
   An example Express app using IoC to create routes, with necessary components.
+
+- __[Async Express](https://github.com/jaredhanson/electrolyte/tree/master/examples/async-express)__
+  An example Express app using IoC to create routes asynchronously, with necessary components.
 
 ## Tests
 
