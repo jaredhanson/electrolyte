@@ -4,7 +4,7 @@ var chai = require('chai');
 var Container = require('../../../lib/container');
 
 
-describe('integration/hitcounter-constructor', function() {
+describe.skip('integration/hitcounter-constructor', function() {
   
   var container = new Container();
   container.use(require('../../fixtures/sources/common'));

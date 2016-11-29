@@ -8,12 +8,11 @@ Authenticator.prototype.use = function(scheme) {
 
 
 exports = module.exports = function(container) {
-  
   var authenticator = new Authenticator();
-  
-  container.create('../logger');
-  
-  return authenticator;
+  return container.create('../logger')
+    .then(function(scheme) {
+      return authenticator;
+    });
 }
 exports['@singleton'] = true;
 exports['@require'] = [ '!container' ];

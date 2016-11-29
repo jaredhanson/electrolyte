@@ -1,0 +1,12 @@
+{
+  "name": "express-example",
+  "version": "0.0.0",
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "electrolyte": "^0.2.6",
+    "express": "^4.14.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
