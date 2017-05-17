@@ -1,8 +1,8 @@
-exports = module.exports = {
-  'authenticator': require('./authenticator')
-};
+exports.components = [
+  'authenticator'
+];
 
-exports.load = function(id) {
+exports.__load = function(id) {
   try {
     return require('./' + id);
   } catch (ex) {
