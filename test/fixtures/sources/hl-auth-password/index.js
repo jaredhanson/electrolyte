@@ -3,7 +3,7 @@ exports.components = [
   'digest'
 ];
 
-exports.__load = function(id) {
+exports.load = function(id) {
   try {
     return require('./' + id);
   } catch (ex) {
