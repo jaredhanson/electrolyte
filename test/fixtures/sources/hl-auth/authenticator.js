@@ -10,7 +10,7 @@ Authenticator.prototype.use = function(scheme) {
 exports = module.exports = function(container) {
   var authenticator = new Authenticator();
   
-  var specs = container.specs()
+  var specs = container.specs(true)
     , sspecs = []
     , spec, i, len;
   for (i = 0, len = specs.length; i < len; ++i) {
