@@ -400,7 +400,7 @@ describe('Container', function() {
       it('should throw an error', function() {
         expect(function() {
           container.use('test', undefined);
-        }).to.throw(Error, "Container#use requires a load function, was passed a 'undefined'");
+        }).to.throw(Error, "InvalidArgumentError: Container#use requires a `s` to be either object with `load` method or function, \'undefined\' has been passed");
       });
     });
   });
