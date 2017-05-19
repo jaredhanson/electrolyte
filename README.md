@@ -95,8 +95,7 @@ And those annotations appear again.
 #### Async Components
 
 Async components are defined in an identical manner to traditional components
-except that the factory function should return a promise. An additional annotation
-is used to signify that the dependency should be treated as asynchronous.
+except that the factory function should return a promise.
 
 Let's rewrite the database component above slightly to return a promise.
 
@@ -113,7 +112,6 @@ exports = module.exports = function(settings) {
   });
 }
 
-exports['@async'] = true;
 exports['@singleton'] = true;
 exports['@require'] = [ 'settings' ];
 ```
@@ -129,7 +127,6 @@ exports = module.exports = function(database) {
   };
 }
 
-exports['@async'] = true;
 exports['@singleton'] = true;
 exports['@require'] = [ 'database' ];
 ```
@@ -145,11 +142,6 @@ Electrolyte uses to automatically wire together an application.
 
 - `@singleton`  Indicates that the component returns a singleton object, which
   should be shared by all components in the application.
-
-- `@async`  Indicates that the component returns a promise OR depends on a
-  component that is computed asynchronously. An async component can only be created
-  using the `.createAsync` method. Attempting to create an async component using
-  the standard `.create` will throw an exception.
 
 #### Creating Components
 
