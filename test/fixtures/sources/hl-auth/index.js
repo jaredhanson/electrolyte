@@ -1,6 +1,6 @@
-exports = module.exports = {
-  'authenticator': require('./authenticator')
-};
+exports.components = [
+  'authenticator'
+];
 
 exports.load = function(id) {
   try {
