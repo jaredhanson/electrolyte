@@ -9,7 +9,7 @@ Authenticator.prototype.use = function(scheme) {
 
 exports = module.exports = function(container) {
   var authenticator = new Authenticator();
-  return container.create('schemes/fubar')
+  return container.create('../schemes/fubar')
     .then(function(scheme) {
       return authenticator;
     });
