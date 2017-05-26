@@ -1,6 +1,6 @@
 /* global describe, it, expect */
 var sinon = require('sinon');
-var Spec = require('../lib/spec');
+var Spec = require('../lib/component');
 
 
 describe('Spec', function() {
