@@ -204,7 +204,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "auth/schemes/fubar" required by: auth/fubar/notfound');
+          expect(error.message).to.equal("Unable to create component 'auth/schemes/fubar' required by 'auth/fubar/notfound'");
         });
       });
     }); // using source that attempts to register spec outside of namespace

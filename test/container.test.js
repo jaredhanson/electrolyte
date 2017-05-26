@@ -26,7 +26,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "unknown" required by: unknown');
+          expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
         });
       });
       
@@ -46,7 +46,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "unknown" required by: main');
+          expect(error.message).to.equal("Unable to create component 'unknown' required by 'main'");
         });
       });
       
@@ -66,7 +66,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "unknown" required by: unknown');
+          expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
         });
       });
       
@@ -480,7 +480,7 @@ describe('Container', function() {
       
       it('should fail with error', function() {
         expect(error).to.be.an.instanceOf(Error);
-        expect(error.message).to.equal('Unable to create object "fubar" required by: unknown');
+        expect(error.message).to.equal("Unable to create component 'fubar' required by 'unknown'");
       });
     });
   });
