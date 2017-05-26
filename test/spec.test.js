@@ -11,7 +11,7 @@ describe('Spec', function() {
       expect(function() {
         var spec = new Spec('foo', {});
         spec.instantiate();
-      }).to.throw(Error, "Spec#instantiate must be overridden by subclass");
+      }).to.throw(Error, "Component#instantiate must be overridden by subclass");
     });
     
   });
