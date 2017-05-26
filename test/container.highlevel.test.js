@@ -12,7 +12,7 @@ describe('Container', function() {
       container.use(require('./fixtures/sources/hl-common'));
     
       it('should have registered specs prior to creating object', function() {
-        var specs = container.specs();
+        var specs = container.components();
         expect(specs).to.be.an('array');
         expect(specs).to.have.length(1);
       
@@ -39,7 +39,7 @@ describe('Container', function() {
         });
     
         it('should still have registered specs after creating object', function() {
-          var specs = container.specs();
+          var specs = container.components();
           expect(specs).to.be.an('array');
           expect(specs).to.have.length(1);
       
@@ -58,7 +58,7 @@ describe('Container', function() {
       container.use('auth', require('./fixtures/sources/hl-auth'));
     
       it('should have registered specs prior to creating object', function() {
-        var specs = container.specs();
+        var specs = container.components();
         expect(specs).to.be.an('array');
         expect(specs).to.have.length(1);
       

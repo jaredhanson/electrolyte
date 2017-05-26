@@ -413,7 +413,7 @@ describe('Container', function() {
     container.use(common);
     
     it('should not have any registered specs prior to creating object', function() {
-      var specs = container.specs();
+      var specs = container.components();
       expect(specs).to.be.an('array');
       expect(specs).to.have.length(0);
     });
@@ -435,7 +435,7 @@ describe('Container', function() {
       });
       
       it('should have registered specs after creating object', function() {
-        var specs = container.specs();
+        var specs = container.components();
         expect(specs).to.be.an('array');
         expect(specs).to.have.length(1);
       
@@ -493,7 +493,7 @@ describe('Container', function() {
     container.use(asyncSource);
 
     it('should not have any registered specs prior to creating object', function() {
-      var specs = container.specs();
+      var specs = container.components();
       expect(specs).to.be.an('array');
       expect(specs).to.have.length(0);
     });
