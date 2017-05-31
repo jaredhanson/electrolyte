@@ -1,9 +1,10 @@
 /* global describe, it, expect */
 
-var Constructor = require('../../lib/patterns/constructor');
+var ConstructorComponent = require('../../lib/patterns/constructor')
+  , ComponentCreateError = require('../../lib/errors/componentcreate')
 
 
-describe('Constructor', function() {
+describe('ConstructorComponent', function() {
   function Animal(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
     this._a0 = a0;
     this._a1 = a1;
@@ -17,7 +18,7 @@ describe('Constructor', function() {
     this._a9 = a9;
   }
   
-  var ctor = new Constructor('animal', Animal);
+  var ctor = new ConstructorComponent('animal', Animal);
   
   
   it('should instantiate with 1 argument', function() {
@@ -183,6 +184,6 @@ describe('Constructor', function() {
   it('should throw an error when instantiated with too many arguments', function() {
     expect(function() {
       ctor.instantiate('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
-    }).to.throw(Error, "Constructor for object 'animal' requires too many arguments");
+    }).to.throw(ComponentCreateError, "Constructor for object 'animal' requires too many arguments");
   });
 });

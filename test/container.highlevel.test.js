@@ -12,7 +12,7 @@ describe('Container', function() {
       container.use(require('./fixtures/sources/hl-common'));
     
       it('should have registered specs prior to creating object', function() {
-        var specs = container.specs();
+        var specs = container.components();
         expect(specs).to.be.an('array');
         expect(specs).to.have.length(1);
       
@@ -39,7 +39,7 @@ describe('Container', function() {
         });
     
         it('should still have registered specs after creating object', function() {
-          var specs = container.specs();
+          var specs = container.components();
           expect(specs).to.be.an('array');
           expect(specs).to.have.length(1);
       
@@ -58,7 +58,7 @@ describe('Container', function() {
       container.use('auth', require('./fixtures/sources/hl-auth'));
     
       it('should have registered specs prior to creating object', function() {
-        var specs = container.specs();
+        var specs = container.components();
         expect(specs).to.be.an('array');
         expect(specs).to.have.length(1);
       
@@ -204,7 +204,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "auth/schemes/fubar" required by: auth/fubar/notfound');
+          expect(error.message).to.equal("Unable to create component 'auth/schemes/fubar' required by 'auth/fubar/notfound'");
         });
       });
     }); // using source that attempts to register spec outside of namespace

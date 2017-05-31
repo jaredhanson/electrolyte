@@ -26,7 +26,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "unknown" required by: unknown');
+          expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
         });
       });
       
@@ -46,7 +46,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "unknown" required by: main');
+          expect(error.message).to.equal("Unable to create component 'unknown' required by 'main'");
         });
       });
       
@@ -66,7 +66,7 @@ describe('Container', function() {
         
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
-          expect(error.message).to.equal('Unable to create object "unknown" required by: unknown');
+          expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
         });
       });
       
@@ -400,7 +400,7 @@ describe('Container', function() {
       it('should throw an error', function() {
         expect(function() {
           container.use('test', undefined);
-        }).to.throw(TypeError, "Container#use requires \"asm\" to be either a function or an object with a \"load\" function, \'undefined\' has been passed");
+        }).to.throw(TypeError, "Container#use requires `asm` to be either a function or an object with a `load` function, \'undefined\' has been passed");
       });
     });
   });
@@ -413,7 +413,7 @@ describe('Container', function() {
     container.use(common);
     
     it('should not have any registered specs prior to creating object', function() {
-      var specs = container.specs();
+      var specs = container.components();
       expect(specs).to.be.an('array');
       expect(specs).to.have.length(0);
     });
@@ -435,7 +435,7 @@ describe('Container', function() {
       });
       
       it('should have registered specs after creating object', function() {
-        var specs = container.specs();
+        var specs = container.components();
         expect(specs).to.be.an('array');
         expect(specs).to.have.length(1);
       
@@ -480,7 +480,7 @@ describe('Container', function() {
       
       it('should fail with error', function() {
         expect(error).to.be.an.instanceOf(Error);
-        expect(error.message).to.equal('Unable to create object "fubar" required by: unknown');
+        expect(error.message).to.equal("Unable to create component 'fubar' required by 'unknown'");
       });
     });
   });
@@ -493,7 +493,7 @@ describe('Container', function() {
     container.use(asyncSource);
 
     it('should not have any registered specs prior to creating object', function() {
-      var specs = container.specs();
+      var specs = container.components();
       expect(specs).to.be.an('array');
       expect(specs).to.have.length(0);
     });
