@@ -1,4 +1,5 @@
 var factory = require('../../lib/resolvers/id');
+var path = require('path');
 
 describe('resolvers/id', function() {
   
@@ -35,6 +36,14 @@ describe('resolvers/id', function() {
     
     it('should resolve alphabetical identifiers within namespace', function() {
       expect(resolve('foo/bar')).to.equal('foo/bar');
+    });
+
+    it('should resolve alphabetical identifiers within namespace, also backslash', function() {
+      expect(resolve('foo\\bar')).to.equal('foo\\bar');
+    });
+
+    it('should resolve alphabetical identifiers created via `path`', function() {
+      expect(resolve(path.join('foo', 'bar'))).to.equal(path.join('foo', 'bar'));
     });
     
     it('should not resolve identifiers containing spaces', function() {
