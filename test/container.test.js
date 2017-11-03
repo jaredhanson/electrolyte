@@ -27,6 +27,8 @@ describe('Container', function() {
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
           expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
+          expect(error.code).to.equal("COMPONENT_NOT_FOUND");
+          expect(error.stack.split("\n")[0]).to.equal("ComponentNotFoundError: Unable to create component 'unknown' required by 'unknown'")
         });
       });
       
