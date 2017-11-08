@@ -27,6 +27,8 @@ describe('Container', function() {
         it('should fail with error', function() {
           expect(error).to.be.an.instanceOf(Error);
           expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
+          expect(error.code).to.equal("COMPONENT_NOT_FOUND");
+          expect(error.stack.split("\n")[0]).to.equal("ComponentNotFoundError: Unable to create component 'unknown' required by 'unknown'")
         });
       });
       
@@ -71,7 +73,71 @@ describe('Container', function() {
       });
       
     });
-    
+    describe('unknown interface', function() {
+      
+      describe('created without a parent', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('$unknown')
+            .then(function(obj) {
+              done(new Error('should not create object'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal("Cannot find component implementing interface '$unknown' required by 'unknown'");
+          expect(error.code).to.equal("INTERFACE_NOT_FOUND");
+          expect(error.stack.split("\n")[0]).to.equal("InterfaceNotFoundError: Cannot find component implementing interface '$unknown' required by 'unknown'")
+        });
+      });
+      
+      describe('created with a parent', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('$unknown', { id: 'main' })
+            .then(function(obj) {
+              done(new Error('should not create object'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal("Cannot find component implementing interface '$unknown' required by 'main'");
+        });
+      });
+      
+      describe('created with a parent, lacking an id', function() {
+        var error;
+        
+        before(function(done) {
+          container.create('$unknown', {})
+            .then(function(obj) {
+              done(new Error('should not create object'));
+            })
+            .catch(function(err) {
+              error = err;
+              done();
+            });
+        })
+        
+        it('should fail with error', function() {
+          expect(error).to.be.an.instanceOf(Error);
+          expect(error.message).to.equal("Cannot find component implementing interface '$unknown' required by 'unknown'");
+        });
+      });
+      
+    });
     describe.skip('async component', function() {
       var container = new Container();
       container.use(require('./fixtures/sources/async'));
