@@ -41,6 +41,7 @@
     "canonical-path": "0.0.2",
     "debug": "^2.2.0",
     "depd": "^1.0.1",
+    "p-filter": "2.1",
     "promise": "^7.1.1",
     "scripts": "0.1.x"
   },
