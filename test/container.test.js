@@ -368,14 +368,14 @@ describe('Container', function() {
   describe('#use', function() {
     var container = new Container();
     
-    describe('invalid loader', function() {
-      it('should throw an error', function() {
-        expect(function() {
-          container.use('test', undefined);
-        }).to.throw(TypeError, "Container#use requires `asm` to be either a function or an object with a `load` function, \'undefined\' has been passed");
-      });
+    
+    it('should throw error', function() {
+      expect(function() {
+        container.use('test', undefined);
+      }).to.throw(TypeError, "Container#use requires `asm` to be either a function or an object with a `load` function, \'undefined\' has been passed");
     });
-  });
+    
+  }); // #use
   
   
   describe('using common source', function() {
