@@ -8,47 +8,32 @@ describe('Container', function() {
   describe('#create', function() {
     var container = new Container();
     
-    describe('unknown component', function() {
-      
-      describe('created without a parent', function() {
-        var error;
-        
-        before(function(done) {
-          container.create('unknown')
-            .then(function(obj) {
-              done(new Error('should not create object'));
-            })
-            .catch(function(err) {
-              error = err;
-              done();
-            });
-        })
-        
-        it('should fail with error', function() {
+    it('should fail when creating unknown component', function(done) {
+      container.create('unknown')
+        .then(function(obj) {
+          done(new Error('should not create object'));
+        }, function(error) {
           expect(error).to.be.an.instanceOf(Error);
           expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
-        });
-      });
-      
-      describe('created with a parent', function() {
-        var error;
-        
-        before(function(done) {
-          container.create('unknown', { id: 'main' })
-            .then(function(obj) {
-              done(new Error('should not create object'));
-            })
-            .catch(function(err) {
-              error = err;
-              done();
-            });
+          done();
         })
-        
-        it('should fail with error', function() {
+        .catch(done);
+    });
+    
+    it('should fail when creating unknown component with parent', function(done) {
+      container.create('unknown',  { id: 'main' })
+        .then(function(obj) {
+          done(new Error('should not create object'));
+        }, function(error) {
           expect(error).to.be.an.instanceOf(Error);
           expect(error.message).to.equal("Unable to create component 'unknown' required by 'main'");
-        });
-      });
+          done();
+        })
+        .catch(done);
+    });
+    
+    
+    describe('unknown component', function() {
       
       describe('created with a parent, lacking an id', function() {
         var error;
