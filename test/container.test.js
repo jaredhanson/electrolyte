@@ -32,29 +32,16 @@ describe('Container', function() {
         .catch(done);
     });
     
-    
-    describe('unknown component', function() {
-      
-      describe('created with a parent, lacking an id', function() {
-        var error;
-        
-        before(function(done) {
-          container.create('unknown', {})
-            .then(function(obj) {
-              done(new Error('should not create object'));
-            })
-            .catch(function(err) {
-              error = err;
-              done();
-            });
-        })
-        
-        it('should fail with error', function() {
+    it('should fail when creating unknown component with parent that lacks an id', function(done) {
+      container.create('unknown',  {})
+        .then(function(obj) {
+          done(new Error('should not create object'));
+        }, function(error) {
           expect(error).to.be.an.instanceOf(Error);
           expect(error.message).to.equal("Unable to create component 'unknown' required by 'unknown'");
-        });
-      });
-      
+          done();
+        })
+        .catch(done);
     });
     
     describe.skip('async component', function() {
