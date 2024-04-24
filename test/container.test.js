@@ -1,6 +1,7 @@
 /* global describe, it, expect */
 var Promise = require('promise');
 var Container = require('../lib/container');
+var sinon = require('sinon');
 
 
 describe('Container', function() {
@@ -366,10 +367,37 @@ describe('Container', function() {
   }); // #create
   
   describe('#use', function() {
-    var container = new Container();
     
+    it('should load components exported by package', function() {
+      var container = new Container();
+      
+      var pkg = {
+        components: [
+          'beep',
+          'boop'
+        ],
+        load: sinon.spy(function() {
+          return {};
+        })
+      }
+      container.use(pkg);
+      
+      expect(pkg.load).to.have.been.callCount(2);
+      expect(pkg.load.getCall(0).args[0]).to.equal('beep');
+      expect(pkg.load.getCall(1).args[0]).to.equal('boop');
+      expect(Object.keys(container._components)).to.deep.equal([ 'beep', 'boop' ]);
+    });
     
-    it('should throw error', function() {
+    it('should not load components when passed a loader function', function() {
+      var container = new Container();
+      
+      container.use(function load(){});
+      expect(Object.keys(container._components)).to.deep.equal([]);
+    });
+    
+    it('should throw error when passed an invalid package', function() {
+      var container = new Container();
+      
       expect(function() {
         container.use('test', undefined);
       }).to.throw(TypeError, "Container#use requires `asm` to be either a function or an object with a `load` function, \'undefined\' has been passed");
