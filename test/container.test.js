@@ -388,6 +388,26 @@ describe('Container', function() {
       expect(Object.keys(container._components)).to.deep.equal([ 'beep', 'boop' ]);
     });
     
+    it('should load components exported by package under namespace', function() {
+      var container = new Container();
+      
+      var pkg = {
+        components: [
+          'beep',
+          'boop'
+        ],
+        load: sinon.spy(function() {
+          return {};
+        })
+      }
+      container.use('bot', pkg);
+      
+      expect(pkg.load).to.have.been.callCount(2);
+      expect(pkg.load.getCall(0).args[0]).to.equal('beep');
+      expect(pkg.load.getCall(1).args[0]).to.equal('boop');
+      expect(Object.keys(container._components)).to.deep.equal([ 'bot/beep', 'bot/boop' ]);
+    });
+    
     it('should not load components when passed a loader function', function() {
       var container = new Container();
       
