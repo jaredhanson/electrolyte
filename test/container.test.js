@@ -420,7 +420,7 @@ describe('Container', function() {
       
       expect(function() {
         container.use('test', undefined);
-      }).to.throw(TypeError, "Container#use requires `asm` to be either a function or an object with a `load` function, \'undefined\' has been passed");
+      }).to.throw(TypeError, "Container#use requires `pkg` to be either a function or an object with a `load` function, \'undefined\' has been passed");
     });
     
   }); // #use
