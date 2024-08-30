@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- `@require` elements are parsed for structured parameters delimited within
+square brackets.
+- Variable functions are called with the container as `this` context and
+structured parameters as arguments, as opposed to the container and component
+as arguments.
 
 ## [0.7.1] - 2023-11-20
 ### Changed
