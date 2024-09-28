@@ -49,7 +49,7 @@
     "chai": "3.x.x",
     "chai-express-handler": "git://github.com/jaredhanson/chai-express-handler.git",
     "make-node": "0.3.x",
-    "mocha": "2.x.x",
+    "mocha": "10.x.x",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
   },
